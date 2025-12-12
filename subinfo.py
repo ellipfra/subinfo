@@ -325,6 +325,39 @@ class TheGraphClient:
         
         return results
     
+    def get_indexers_urls(self, indexer_ids: List[str]) -> Dict[str, str]:
+        """Get URLs for multiple indexers (fallback when ENS is not available)"""
+        if not indexer_ids:
+            return {}
+        
+        # Remove duplicates and format IDs
+        unique_ids = list(set(id.lower() for id in indexer_ids if id))
+        
+        results = {}
+        # Query in batches of 100
+        batch_size = 100
+        for i in range(0, len(unique_ids), batch_size):
+            batch = unique_ids[i:i+batch_size]
+            query = """
+            query GetIndexersUrls($ids: [String!]!) {
+                indexers(where: { id_in: $ids }) {
+                    id
+                    url
+                }
+            }
+            """
+            try:
+                result = self.query(query, {'ids': batch})
+                for indexer in result.get('indexers', []):
+                    indexer_id = indexer.get('id', '').lower()
+                    url = indexer.get('url')
+                    if url:
+                        results[indexer_id] = url
+            except:
+                pass
+        
+        return results
+    
     def get_subgraph_metadata(self, subgraph_id: str) -> Optional[Dict]:
         """Get subgraph deployment metadata including network, grafting, and reward proportion"""
         # First find the deployment ID if it's an IPFS hash
@@ -984,7 +1017,7 @@ def print_subgraph_metadata(metadata: Optional[Dict]):
     print()
 
 
-def print_allocations(allocations: List[Dict], title: str, my_indexer_id: Optional[str] = None, ens_client: Optional[ENSClient] = None):
+def print_allocations(allocations: List[Dict], title: str, my_indexer_id: Optional[str] = None, ens_client: Optional[ENSClient] = None, indexer_urls: Optional[Dict[str, str]] = None):
     """Display allocations in a compact format with colors"""
     print_section(title)
     if not allocations:
@@ -1014,9 +1047,10 @@ def print_allocations(allocations: List[Dict], title: str, my_indexer_id: Option
             marker = " "
             indexer_color = Colors.WHITE
         
-        # Get ENS name if available
+        # Get ENS name if available, or URL as fallback
         ens_name = ens_names.get(indexer_id.lower()) if ens_names else None
-        indexer_display = format_indexer_display(indexer_id, ens_name)
+        url = indexer_urls.get(indexer_id.lower()) if indexer_urls and not ens_name else None
+        indexer_display = format_indexer_display(indexer_id, ens_name, url)
         
         created = format_timestamp(str(alloc.get('createdAt', '0')))[:16]  # YYYY-MM-DD HH:MM
         status = alloc.get('status', 'Active')
@@ -1050,7 +1084,7 @@ def print_allocations(allocations: List[Dict], title: str, my_indexer_id: Option
     print(f"\n{Colors.BOLD}Total: {Colors.BRIGHT_GREEN}{total:,.2f} GRT{Colors.RESET}\n")
 
 
-def print_allocations_timeline(allocations: List[Dict], unallocations: List[Dict], hours: int = 48, my_indexer_id: Optional[str] = None, ens_client: Optional[ENSClient] = None, indexers_stake_info: Optional[Dict] = None):
+def print_allocations_timeline(allocations: List[Dict], unallocations: List[Dict], hours: int = 48, my_indexer_id: Optional[str] = None, ens_client: Optional[ENSClient] = None, indexers_stake_info: Optional[Dict] = None, indexer_urls: Optional[Dict[str, str]] = None):
     """Display allocations and unallocations in a chronological timeline with colors"""
     print_section(f"Allocations/Unallocations Timeline ({hours}h)")
     
@@ -1107,9 +1141,10 @@ def print_allocations_timeline(allocations: List[Dict], unallocations: List[Dict
             marker = " "
             indexer_color = Colors.WHITE
         
-        # Get ENS name if available
+        # Get ENS name if available, or URL as fallback
         ens_name = ens_names.get(indexer_id.lower()) if ens_names else None
-        indexer_display = format_indexer_display(indexer_id, ens_name)
+        url = indexer_urls.get(indexer_id.lower()) if indexer_urls and not ens_name else None
+        indexer_display = format_indexer_display(indexer_id, ens_name, url)
         
         tokens = event['tokens']
         amount = float(tokens) / 1e18
@@ -1318,15 +1353,33 @@ def get_ens_subgraph_url() -> Optional[str]:
     return None
 
 
-def format_indexer_display(indexer_id: str, ens_name: Optional[str] = None, max_width: int = 28) -> str:
-    """Format indexer display with ENS name if available, truncated to max_width"""
+def format_indexer_display(indexer_id: str, ens_name: Optional[str] = None, url: Optional[str] = None, max_width: int = 28) -> str:
+    """Format indexer display with ENS name or URL if available, truncated to max_width"""
     if ens_name:
-        # Format: "ens_name (0x1234...)"
+        # Format: "ens_name (0x1234..)"
         addr_suffix = f" ({indexer_id[:6]}..)"
         max_ens_len = max_width - len(addr_suffix)
         if len(ens_name) > max_ens_len:
             ens_name = ens_name[:max_ens_len-2] + ".."
         return f"{ens_name}{addr_suffix}"
+    
+    if url:
+        # Format: "..domain.com (0x1234..)" - cut from beginning
+        # Remove protocol
+        display_url = url
+        for prefix in ['https://', 'http://', 'www.']:
+            if display_url.startswith(prefix):
+                display_url = display_url[len(prefix):]
+        # Remove trailing slash and path
+        display_url = display_url.rstrip('/').split('/')[0]
+        
+        addr_suffix = f" ({indexer_id[:6]}..)"
+        max_url_len = max_width - len(addr_suffix)
+        if len(display_url) > max_url_len:
+            # Cut from beginning with ".." prefix
+            display_url = ".." + display_url[-(max_url_len-2):]
+        return f"{display_url}{addr_suffix}"
+    
     return indexer_id[:10] + ".." if len(indexer_id) > 10 else indexer_id
 
 
@@ -1438,7 +1491,6 @@ Example:
         
         # 4. Current allocations
         current_allocations = client.get_current_allocations(args.subgraph_hash)
-        print_allocations(current_allocations, "Active Allocations", my_indexer_id, ens_client)
         
         # 5. Allocation history (created in last N hours)
         allocation_history = client.get_allocation_history(args.subgraph_hash, args.hours)
@@ -1446,12 +1498,27 @@ Example:
         # 6. Unallocations (closed in last N hours)
         unallocations = client.get_unallocations(args.subgraph_hash, args.hours)
         
-        # 7. Get stake info for indexers who unallocated (to detect high unallocated stake)
+        # 7. Collect all indexer IDs and fetch their URLs (fallback for ENS)
+        all_indexer_ids = set()
+        for alloc in current_allocations:
+            all_indexer_ids.add(alloc.get('indexer', {}).get('id', ''))
+        for alloc in allocation_history:
+            all_indexer_ids.add(alloc.get('indexer', {}).get('id', ''))
+        for unalloc in unallocations:
+            all_indexer_ids.add(unalloc.get('indexer', {}).get('id', ''))
+        all_indexer_ids.discard('')
+        
+        indexer_urls = client.get_indexers_urls(list(all_indexer_ids)) if all_indexer_ids else {}
+        
+        # 8. Get stake info for indexers who unallocated (to detect high unallocated stake)
         unalloc_indexer_ids = [u.get('indexer', {}).get('id', '') for u in unallocations]
         indexers_stake_info = client.get_indexers_stake_info(unalloc_indexer_ids) if unalloc_indexer_ids else {}
         
-        # 8. Combined allocations/unallocations timeline
-        print_allocations_timeline(allocation_history, unallocations, args.hours, my_indexer_id, ens_client, indexers_stake_info)
+        # 9. Display allocations
+        print_allocations(current_allocations, "Active Allocations", my_indexer_id, ens_client, indexer_urls)
+        
+        # 10. Combined allocations/unallocations timeline
+        print_allocations_timeline(allocation_history, unallocations, args.hours, my_indexer_id, ens_client, indexers_stake_info, indexer_urls)
         
     except requests.exceptions.RequestException as e:
         print(f"Connection error: {e}", file=sys.stderr)
