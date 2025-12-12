@@ -1083,7 +1083,8 @@ def print_allocations(allocations: List[Dict], title: str, my_indexer_id: Option
         else:
             print(f"  {marker}{' ' * marker_padding}  {indexer_color}{indexer_display}{' ' * indexer_padding}{Colors.RESET}  {Colors.BRIGHT_GREEN}{' ' * tokens_padding}{tokens_str}{Colors.RESET}  {Colors.DIM}{created}{Colors.RESET}  {status_color}{status}{Colors.RESET}{Colors.DIM}{duration_str}{Colors.RESET}")
     
-    print(f"\n{Colors.BOLD}Total: {Colors.BRIGHT_GREEN}{total:,.2f} GRT{Colors.RESET}\n")
+    total_fmt = f"{total:,.2f}" if total < 1 else f"{total:,.0f}"
+    print(f"\n{Colors.BOLD}Total: {Colors.BRIGHT_GREEN}{total_fmt} GRT{Colors.RESET}\n")
 
 
 def print_allocations_timeline(allocations: List[Dict], unallocations: List[Dict], hours: int = 48, my_indexer_id: Optional[str] = None, ens_client: Optional[ENSClient] = None, indexers_stake_info: Optional[Dict] = None, indexer_urls: Optional[Dict[str, str]] = None):
@@ -1193,7 +1194,9 @@ def print_allocations_timeline(allocations: List[Dict], unallocations: List[Dict
                     warning = f" {Colors.BRIGHT_YELLOW}⚠ {unalloc_pct:.0f}% unallocated{Colors.RESET}"
             print(f"  [{symbol}]{' ' * symbol_padding} {marker}{' ' * marker_padding}  {Colors.DIM}{timestamp}{Colors.RESET}  {indexer_color}{indexer_display}{' ' * indexer_padding}{Colors.RESET}  {Colors.BRIGHT_RED}{' ' * tokens_padding}{tokens_str}{Colors.RESET}  closed{warning}")
     
-    print(f"\n{Colors.BOLD}Total allocated: {Colors.BRIGHT_GREEN}{total_allocated:,.2f} GRT{Colors.RESET} | Total unallocated: {Colors.BRIGHT_RED}{total_unallocated:,.2f} GRT{Colors.RESET}\n")
+    alloc_fmt = f"{total_allocated:,.2f}" if total_allocated < 1 else f"{total_allocated:,.0f}"
+    unalloc_fmt = f"{total_unallocated:,.2f}" if total_unallocated < 1 else f"{total_unallocated:,.0f}"
+    print(f"\n{Colors.BOLD}Total allocated: {Colors.BRIGHT_GREEN}{alloc_fmt} GRT{Colors.RESET} | Total unallocated: {Colors.BRIGHT_RED}{unalloc_fmt} GRT{Colors.RESET}\n")
 
 
 def print_curation_signal(signal_data: Optional[Dict]):
@@ -1276,7 +1279,10 @@ def print_signal_changes(changes: List[Dict], hours: int = 48, new_deployment_in
     
     net = total_added - total_removed
     net_color = Colors.BRIGHT_GREEN if net >= 0 else Colors.BRIGHT_RED
-    print(f"\n{Colors.BOLD}Total added: {Colors.BRIGHT_GREEN}{total_added:,.2f} GRT{Colors.RESET} | Removed: {Colors.BRIGHT_RED}{total_removed:,.2f} GRT{Colors.RESET} | Net: {net_color}{net:,.2f} GRT{Colors.RESET}\n")
+    added_fmt = f"{total_added:,.2f}" if total_added < 1 else f"{total_added:,.0f}"
+    removed_fmt = f"{total_removed:,.2f}" if total_removed < 1 else f"{total_removed:,.0f}"
+    net_fmt = f"{net:,.2f}" if abs(net) < 1 else f"{net:,.0f}"
+    print(f"\n{Colors.BOLD}Total added: {Colors.BRIGHT_GREEN}{added_fmt} GRT{Colors.RESET} | Removed: {Colors.BRIGHT_RED}{removed_fmt} GRT{Colors.RESET} | Net: {net_color}{net_fmt} GRT{Colors.RESET}\n")
 
 
 def get_network_subgraph_url() -> str:
