@@ -1463,8 +1463,7 @@ Example:
     # But we can also have just the base URL if the network is directly accessible
     # For now, we use the URL as is since it should point to the network subgraph
     
-    print(f"{Colors.BOLD}Subgraph:{Colors.RESET} {Colors.CYAN}{args.subgraph_hash}{Colors.RESET}")
-    print(f"{Colors.BOLD}Network:{Colors.RESET} {Colors.DIM}{network_url}{Colors.RESET}\n")
+    print(f"{Colors.BOLD}Subgraph:{Colors.RESET} {Colors.CYAN}{args.subgraph_hash}{Colors.RESET}\n")
     
     # Create client to query network subgraph
     client = TheGraphClient(network_url)
