@@ -276,12 +276,72 @@ class TheGraphClient:
                 createdAt
                 closedAt
                 status
+                indexingRewards
             }}
         }}
         """
         try:
             result = self.query(query)
             return result.get('allocations', [])
+        except Exception as e:
+            return []
+    
+    def get_poi_submissions(self, subgraph_id: str, hours: int = 48) -> List[Dict]:
+        """Get POI submissions (reward collections) for the last N hours"""
+        cutoff_time = int((datetime.now() - timedelta(hours=hours)).timestamp())
+        
+        # First find the deployment ID if necessary
+        deployment_id = subgraph_id
+        if not deployment_id.startswith('0x'):
+            deployment_query = """
+            query FindSubgraphDeployment($ipfsHash: String!) {
+                subgraphDeployments(
+                    where: { ipfsHash: $ipfsHash }
+                    first: 1
+                ) {
+                    id
+                }
+            }
+            """
+            try:
+                deployment_result = self.query(deployment_query, {'ipfsHash': subgraph_id})
+                deployments = deployment_result.get('subgraphDeployments', [])
+                if not deployments:
+                    return []
+                deployment_id = deployments[0]['id']
+            except Exception as e:
+                return []
+        
+        # Search for POI submissions in the period
+        query = f"""
+        {{
+            poiSubmissions(
+                where: {{ 
+                    allocation_: {{ subgraphDeployment: "{deployment_id}" }}
+                    presentedAtTimestamp_gte: {cutoff_time}
+                }}
+                orderBy: presentedAtTimestamp
+                orderDirection: desc
+            ) {{
+                id
+                presentedAtTimestamp
+                poi
+                allocation {{
+                    id
+                    status
+                    indexer {{
+                        id
+                    }}
+                    allocatedTokens
+                    indexingRewards
+                    createdAt
+                }}
+            }}
+        }}
+        """
+        try:
+            result = self.query(query)
+            return result.get('poiSubmissions', [])
         except Exception as e:
             return []
     
@@ -1253,8 +1313,8 @@ def print_allocations(allocations: List[Dict], title: str, my_indexer_id: Option
     print()
 
 
-def print_allocations_timeline(allocations: List[Dict], unallocations: List[Dict], hours: int = 48, my_indexer_id: Optional[str] = None, ens_client: Optional[ENSClient] = None, indexers_stake_info: Optional[Dict] = None, indexer_urls: Optional[Dict[str, str]] = None):
-    """Display allocations and unallocations in a chronological timeline with colors"""
+def print_allocations_timeline(allocations: List[Dict], unallocations: List[Dict], poi_submissions: List[Dict] = None, hours: int = 48, my_indexer_id: Optional[str] = None, ens_client: Optional[ENSClient] = None, indexers_stake_info: Optional[Dict] = None, indexer_urls: Optional[Dict[str, str]] = None):
+    """Display allocations, unallocations and reward collections in a chronological timeline with colors"""
     print_section(f"Allocations/Unallocations Timeline ({hours}h)")
     
     # Create a combined list with event type
@@ -1281,8 +1341,26 @@ def print_allocations_timeline(allocations: List[Dict], unallocations: List[Dict
             'indexer': indexer.get('id', 'Unknown'),
             'tokens': unalloc.get('allocatedTokens', '0'),
             'status': unalloc.get('status', 'Closed'),
-            'createdAt': unalloc.get('createdAt', '0')
+            'createdAt': unalloc.get('createdAt', '0'),
+            'rewards': int(unalloc.get('indexingRewards', '0'))
         })
+    
+    # Add POI submissions (reward collections) for active allocations
+    if poi_submissions:
+        for poi in poi_submissions:
+            alloc = poi.get('allocation', {})
+            # Only show collections for allocations that are still active
+            if alloc.get('status') == 'Active':
+                indexer = alloc.get('indexer', {})
+                rewards = int(alloc.get('indexingRewards', '0'))
+                events.append({
+                    'type': 'collect',
+                    'timestamp': int(poi.get('presentedAtTimestamp', '0')),
+                    'indexer': indexer.get('id', 'Unknown'),
+                    'tokens': alloc.get('allocatedTokens', '0'),
+                    'rewards': rewards,
+                    'status': 'Active'
+                })
     
     if not events:
         print(f"{Colors.DIM}No events found.{Colors.RESET}\n")
@@ -1326,6 +1404,11 @@ def print_allocations_timeline(allocations: List[Dict], unallocations: List[Dict
             symbol = f"{Colors.BRIGHT_GREEN}+{Colors.RESET}"
             status = event['status']
             status_color = Colors.BRIGHT_GREEN if status == 'Active' else Colors.DIM
+        elif event['type'] == 'collect':
+            # Reward collection - don't add to totals, it's not a new allocation
+            symbol = f"{Colors.BRIGHT_CYAN}${Colors.RESET}"
+            status = "Collect"
+            status_color = Colors.BRIGHT_CYAN
         else:  # unallocation
             total_unallocated += amount
             symbol = f"{Colors.BRIGHT_RED}-{Colors.RESET}"
@@ -1349,8 +1432,16 @@ def print_allocations_timeline(allocations: List[Dict], unallocations: List[Dict
                 print(f"  [{symbol}]{' ' * symbol_padding} {marker}{' ' * marker_padding}  {Colors.DIM}{timestamp}{Colors.RESET}  {indexer_color}{indexer_display}{' ' * indexer_padding}{Colors.RESET}  {Colors.BRIGHT_GREEN}{' ' * tokens_padding}{tokens_str}{Colors.RESET}  {status_color}{status}{Colors.RESET} → closed {Colors.DIM}{closed}{Colors.RESET}")
             else:
                 print(f"  [{symbol}]{' ' * symbol_padding} {marker}{' ' * marker_padding}  {Colors.DIM}{timestamp}{Colors.RESET}  {indexer_color}{indexer_display}{' ' * indexer_padding}{Colors.RESET}  {Colors.BRIGHT_GREEN}{' ' * tokens_padding}{tokens_str}{Colors.RESET}  {status_color}{status}{Colors.RESET}")
+        elif event['type'] == 'collect':
+            # Show reward collection with collected amount
+            rewards = event.get('rewards', 0) / 1e18
+            rewards_str = f"{rewards:,.2f} GRT collected"
+            print(f"  [{symbol}]{' ' * symbol_padding} {marker}{' ' * marker_padding}  {Colors.DIM}{timestamp}{Colors.RESET}  {indexer_color}{indexer_display}{' ' * indexer_padding}{Colors.RESET}  {Colors.BRIGHT_CYAN}{' ' * tokens_padding}{tokens_str}{Colors.RESET}  {status_color}{rewards_str}{Colors.RESET}")
         else:  # unallocation
             created = format_timestamp(str(event.get('createdAt', '0')))[:16]
+            # Show rewards collected at close
+            rewards = event.get('rewards', 0) / 1e18
+            rewards_info = f" → {Colors.BRIGHT_CYAN}{rewards:,.2f} GRT{Colors.RESET}" if rewards > 0 else ""
             # Check if indexer has high unallocated stake
             warning = ""
             if indexers_stake_info:
@@ -1358,7 +1449,7 @@ def print_allocations_timeline(allocations: List[Dict], unallocations: List[Dict
                 if stake_info and stake_info.get('unallocated_pct', 0) > 30:
                     unalloc_pct = stake_info['unallocated_pct']
                     warning = f" {Colors.BRIGHT_YELLOW}⚠ {unalloc_pct:.0f}% unallocated{Colors.RESET}"
-            print(f"  [{symbol}]{' ' * symbol_padding} {marker}{' ' * marker_padding}  {Colors.DIM}{timestamp}{Colors.RESET}  {indexer_color}{indexer_display}{' ' * indexer_padding}{Colors.RESET}  {Colors.BRIGHT_RED}{' ' * tokens_padding}{tokens_str}{Colors.RESET}  closed{warning}")
+            print(f"  [{symbol}]{' ' * symbol_padding} {marker}{' ' * marker_padding}  {Colors.DIM}{timestamp}{Colors.RESET}  {indexer_color}{indexer_display}{' ' * indexer_padding}{Colors.RESET}  {Colors.BRIGHT_RED}{' ' * tokens_padding}{tokens_str}{Colors.RESET}  closed{rewards_info}{warning}")
     
     print(f"\n{Colors.BOLD}Total allocated: {Colors.BRIGHT_GREEN}{total_allocated:,.2f} GRT{Colors.RESET} | Total unallocated: {Colors.BRIGHT_RED}{total_unallocated:,.2f} GRT{Colors.RESET}\n")
 
@@ -1667,7 +1758,10 @@ Example:
         # 6. Unallocations (closed in last N hours)
         unallocations = client.get_unallocations(args.subgraph_hash, args.hours)
         
-        # 7. Collect all indexer IDs and fetch their URLs (fallback for ENS)
+        # 7. Get POI submissions (reward collections for long-running allocations)
+        poi_submissions = client.get_poi_submissions(args.subgraph_hash, args.hours)
+        
+        # 8. Collect all indexer IDs and fetch their URLs (fallback for ENS)
         all_indexer_ids = set()
         for alloc in current_allocations:
             all_indexer_ids.add(alloc.get('indexer', {}).get('id', ''))
@@ -1675,20 +1769,22 @@ Example:
             all_indexer_ids.add(alloc.get('indexer', {}).get('id', ''))
         for unalloc in unallocations:
             all_indexer_ids.add(unalloc.get('indexer', {}).get('id', ''))
+        for poi in poi_submissions:
+            all_indexer_ids.add(poi.get('allocation', {}).get('indexer', {}).get('id', ''))
         all_indexer_ids.discard('')
         
         indexer_urls = client.get_indexers_urls(list(all_indexer_ids)) if all_indexer_ids else {}
         
-        # 8. Get stake info for indexers who unallocated (to detect high unallocated stake)
+        # 9. Get stake info for indexers who unallocated (to detect high unallocated stake)
         unalloc_indexer_ids = [u.get('indexer', {}).get('id', '') for u in unallocations]
         indexers_stake_info = client.get_indexers_stake_info(unalloc_indexer_ids) if unalloc_indexer_ids else {}
         
-        # 9. Display allocations (with reward proportion for accrued rewards estimation)
+        # 10. Display allocations (with reward proportion for accrued rewards estimation)
         reward_proportion = subgraph_metadata.get('rewardProportion') if subgraph_metadata else None
         print_allocations(current_allocations, "Active Allocations", my_indexer_id, ens_client, indexer_urls, reward_proportion, network_url)
         
-        # 10. Combined allocations/unallocations timeline
-        print_allocations_timeline(allocation_history, unallocations, args.hours, my_indexer_id, ens_client, indexers_stake_info, indexer_urls)
+        # 11. Combined allocations/unallocations/collections timeline
+        print_allocations_timeline(allocation_history, unallocations, poi_submissions, args.hours, my_indexer_id, ens_client, indexers_stake_info, indexer_urls)
         
     except requests.exceptions.RequestException as e:
         print(f"Connection error: {e}", file=sys.stderr)
