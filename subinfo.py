@@ -26,6 +26,19 @@ from typing import Dict, List, Optional, Tuple
 import requests
 from pathlib import Path
 
+def terminal_link(url: str, text: str) -> str:
+    """Create a clickable terminal hyperlink (OSC 8)"""
+    return f'\033]8;;{url}\033\\{text}\033]8;;\033\\'
+
+
+def format_deployment_link(ipfs_hash: str, subgraph_id: str = None) -> str:
+    """Format IPFS hash as a clickable link to The Graph Explorer"""
+    if subgraph_id:
+        url = f"https://thegraph.com/explorer/subgraphs/{subgraph_id}?view=Query&chain=arbitrum-one"
+        return terminal_link(url, ipfs_hash)
+    return ipfs_hash
+
+
 # ANSI color codes
 class Colors:
     RESET = '\033[0m'
@@ -122,6 +135,30 @@ class TheGraphClient:
             return data.get('data', {})
         except requests.exceptions.RequestException as e:
             raise Exception(f"HTTP request error: {e}")
+    
+    def get_subgraph_id(self, ipfs_hash: str) -> Optional[str]:
+        """Get the subgraph ID from a deployment IPFS hash"""
+        query = """
+        query GetSubgraphId($ipfsHash: String!) {
+            subgraphDeployments(where: { ipfsHash: $ipfsHash }, first: 1) {
+                versions(first: 1, orderBy: createdAt, orderDirection: desc) {
+                    subgraph {
+                        id
+                    }
+                }
+            }
+        }
+        """
+        try:
+            result = self.query(query, {'ipfsHash': ipfs_hash})
+            deployments = result.get('subgraphDeployments', [])
+            if deployments:
+                versions = deployments[0].get('versions', [])
+                if versions:
+                    return versions[0].get('subgraph', {}).get('id')
+        except:
+            pass
+        return None
     
     def get_current_allocations(self, subgraph_id: str) -> List[Dict]:
         """Get current allocations for a subgraph"""
@@ -813,12 +850,15 @@ class TheGraphClient:
                 # Add upgrade as signal change (only if not already added)
                 upgrade_exists = any(c.get('type') == 'upgrade' and c.get('timestamp') == str(new_deployment_info['created']) for c in changes)
                 if not upgrade_exists:
+                    new_hash = new_deployment_info['hash']
+                    new_subgraph_id = self.get_subgraph_id(new_hash) if new_hash != 'Unknown' else None
                     changes.insert(0, {  # Insert at beginning to show upgrade first
                         'type': 'upgrade',
                         'signaller': 'Subgraph Upgrade',
                         'tokens': new_deployment_info['signal'],
                         'timestamp': str(new_deployment_info['created']),
-                        'new_deployment_hash': new_deployment_info['hash']
+                        'new_deployment_hash': new_hash,
+                        'new_subgraph_id': new_subgraph_id
                     })
             elif old_deployment_id and old_deployment_id != deployment_id:
                 # Fallback: if new_deployment_info wasn't set but we know there's an upgrade
@@ -850,12 +890,15 @@ class TheGraphClient:
                         # Add upgrade as signal change (only if not already added)
                         upgrade_exists = any(c.get('type') == 'upgrade' and c.get('timestamp') == str(new_dep_created) for c in changes)
                         if not upgrade_exists:
+                            new_hash = new_deployment.get('ipfsHash', 'Unknown')
+                            new_subgraph_id = self.get_subgraph_id(new_hash) if new_hash != 'Unknown' else None
                             changes.insert(0, {  # Insert at beginning to show upgrade first
                                 'type': 'upgrade',
                                 'signaller': 'Subgraph Upgrade',
                                 'tokens': new_signal,
                                 'timestamp': str(new_dep_created),
-                                'new_deployment_hash': new_deployment.get('ipfsHash', 'Unknown')
+                                'new_deployment_hash': new_hash,
+                                'new_subgraph_id': new_subgraph_id
                             })
                 except Exception as e:
                     # Silently fail, upgrade detection is optional
@@ -1494,7 +1537,9 @@ def print_signal_changes(changes: List[Dict], hours: int = 48):
             symbol = f"{Colors.BRIGHT_YELLOW}↑{Colors.RESET}"
             token_color = Colors.BRIGHT_YELLOW
             new_hash = change.get('new_deployment_hash', 'Unknown')
-            signaller_display = f"{Colors.BRIGHT_YELLOW}Upgrade → {new_hash}{Colors.RESET}"
+            new_subgraph_id = change.get('new_subgraph_id')
+            new_hash_link = format_deployment_link(new_hash, new_subgraph_id) if new_hash != 'Unknown' else new_hash
+            signaller_display = f"{Colors.BRIGHT_YELLOW}Upgrade → {new_hash_link}{Colors.RESET}"
         elif change_type == 'signal':
             total_added += amount
             symbol = f"{Colors.BRIGHT_GREEN}+{Colors.RESET}"
@@ -1698,10 +1743,13 @@ Example:
     # But we can also have just the base URL if the network is directly accessible
     # For now, we use the URL as is since it should point to the network subgraph
     
-    print(f"{Colors.BOLD}Subgraph:{Colors.RESET} {Colors.CYAN}{args.subgraph_hash}{Colors.RESET}")
-    
     # Create client to query network subgraph
     client = TheGraphClient(network_url)
+    
+    # Get subgraph ID for explorer link
+    subgraph_id = client.get_subgraph_id(args.subgraph_hash)
+    hash_link = format_deployment_link(args.subgraph_hash, subgraph_id)
+    print(f"{Colors.BOLD}Subgraph:{Colors.RESET} {Colors.CYAN}{hash_link}{Colors.RESET}")
     
     # Verify it's the TheGraph Network subgraph
     try:
