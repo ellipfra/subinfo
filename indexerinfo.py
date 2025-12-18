@@ -316,6 +316,39 @@ class TheGraphClient:
         result = self.query(query)
         return result.get('allocations', [])
     
+    def get_network_stats(self) -> Dict:
+        """Get network-wide statistics for APR calculation"""
+        query = """
+        {
+            graphNetwork(id: "1") {
+                totalTokensAllocated
+                totalTokensSignalled
+                networkGRTIssuancePerBlock
+            }
+        }
+        """
+        result = self.query(query)
+        return result.get('graphNetwork', {})
+    
+    def get_all_active_allocations(self, indexer_id: str) -> List[Dict]:
+        """Get all active allocations with signal data for APR calculation"""
+        query = f"""
+        {{
+            allocations(
+                where: {{ indexer: "{indexer_id.lower()}", status: Active }}
+                first: 1000
+            ) {{
+                allocatedTokens
+                subgraphDeployment {{
+                    signalledTokens
+                    stakedTokens
+                }}
+            }}
+        }}
+        """
+        result = self.query(query)
+        return result.get('allocations', [])
+    
     def get_delegation_events(self, indexer_id: str, hours: int = 48) -> List[Dict]:
         """Get recent delegation/undelegation events for an indexer"""
         cutoff_time = int((datetime.now() - timedelta(hours=hours)).timestamp())
@@ -695,6 +728,63 @@ Examples:
     
     print(f"  Indexing rewards: {Colors.BRIGHT_CYAN}{raw_reward_cut*100:.1f}%{Colors.RESET} raw, {Colors.BRIGHT_YELLOW}{effective_reward_cut*100:.1f}%{Colors.RESET} effective on delegators")
     print(f"  Query fees:       {Colors.BRIGHT_CYAN}{raw_query_cut*100:.1f}%{Colors.RESET} raw, {Colors.BRIGHT_YELLOW}{effective_query_cut*100:.1f}%{Colors.RESET} effective on delegators")
+    
+    # Estimated APR calculation (based on current allocations)
+    print_section("Instant APR (current allocations)")
+    network_stats = client.get_network_stats()
+    all_allocations = client.get_all_active_allocations(indexer_id)
+    
+    if network_stats and all_allocations:
+        # Network data
+        issuance_per_block = int(network_stats.get('networkGRTIssuancePerBlock', '0')) / 1e18
+        total_signal_network = int(network_stats.get('totalTokensSignalled', '0')) / 1e18
+        
+        # Ethereum blocks per year (~12s per block)
+        eth_blocks_per_year = 2_628_000
+        annual_issuance = issuance_per_block * eth_blocks_per_year
+        
+        # Calculate expected rewards by summing each allocation's contribution
+        # Formula: reward = annual_issuance × (signal_subgraph / total_signal_network) × (allocation / staked_on_subgraph)
+        total_alloc = 0
+        total_expected_rewards = 0
+        
+        for a in all_allocations:
+            alloc = int(a.get('allocatedTokens', '0')) / 1e18
+            signal = int(a.get('subgraphDeployment', {}).get('signalledTokens', '0')) / 1e18
+            staked = int(a.get('subgraphDeployment', {}).get('stakedTokens', '0')) / 1e18
+            
+            total_alloc += alloc
+            
+            if staked > 0 and total_signal_network > 0:
+                # Subgraph's share of total rewards
+                subgraph_share = signal / total_signal_network
+                # Indexer's share of this subgraph's rewards
+                indexer_share_of_subgraph = alloc / staked
+                # Expected reward for this allocation
+                alloc_reward = annual_issuance * subgraph_share * indexer_share_of_subgraph
+                total_expected_rewards += alloc_reward
+        
+        # Convert stake values from wei to GRT for APR calculation
+        self_stake_grt = self_stake / 1e18
+        delegated_grt = delegated / 1e18
+        
+        # Calculate APRs
+        if total_expected_rewards > 0:
+            indexer_rewards = total_expected_rewards * raw_reward_cut
+            delegator_rewards = total_expected_rewards * (1 - raw_reward_cut)
+            
+            apr_indexer = (indexer_rewards / self_stake_grt) * 100 if self_stake_grt > 0 else 0
+            apr_delegators = (delegator_rewards / delegated_grt) * 100 if delegated_grt > 0 else 0
+            
+            print(f"  Expected rewards: {Colors.BRIGHT_CYAN}{total_expected_rewards:,.0f} GRT/year{Colors.RESET}")
+            print(f"  Indexer share ({raw_reward_cut*100:.1f}%): {indexer_rewards:,.0f} GRT/year")
+            print(f"  Delegator share ({(1-raw_reward_cut)*100:.1f}%): {delegator_rewards:,.0f} GRT/year")
+            print(f"  APR Indexer:    {Colors.BRIGHT_GREEN}{apr_indexer:.1f}%{Colors.RESET}")
+            print(f"  APR Delegators: {Colors.BRIGHT_GREEN}{apr_delegators:.2f}%{Colors.RESET}")
+        else:
+            print(f"  {Colors.DIM}Unable to calculate APR{Colors.RESET}")
+    else:
+        print(f"  {Colors.DIM}Unable to fetch network data{Colors.RESET}")
     
     # Allocation stats
     print_section("Allocations")
