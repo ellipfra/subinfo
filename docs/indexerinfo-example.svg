@@ -1,323 +1,246 @@
-<svg class="rich-terminal" viewBox="0 0 1519 1636.0" xmlns="http://www.w3.org/2000/svg">
-    <!-- Generated with Rich https://www.textualize.io -->
+<svg class="terminal-output" viewBox="0 0 1260.0 1679.0" xmlns="http://www.w3.org/2000/svg">
     <style>
-
-    @font-face {
-        font-family: "Fira Code";
-        src: local("FiraCode-Regular"),
-                url("https://cdnjs.cloudflare.com/ajax/libs/firacode/6.2.0/woff2/FiraCode-Regular.woff2") format("woff2"),
-                url("https://cdnjs.cloudflare.com/ajax/libs/firacode/6.2.0/woff/FiraCode-Regular.woff") format("woff");
-        font-style: normal;
-        font-weight: 400;
-    }
-    @font-face {
-        font-family: "Fira Code";
-        src: local("FiraCode-Bold"),
-                url("https://cdnjs.cloudflare.com/ajax/libs/firacode/6.2.0/woff2/FiraCode-Bold.woff2") format("woff2"),
-                url("https://cdnjs.cloudflare.com/ajax/libs/firacode/6.2.0/woff/FiraCode-Bold.woff") format("woff");
-        font-style: bold;
-        font-weight: 700;
-    }
-
-    .terminal-2072161689-matrix {
-        font-family: Fira Code, monospace;
-        font-size: 20px;
-        line-height: 24.4px;
-        font-variant-east-asian: full-width;
-    }
-
-    .terminal-2072161689-title {
-        font-size: 18px;
-        font-weight: bold;
-        font-family: arial;
-    }
-
-    .terminal-2072161689-r1 { fill: #c5c8c6;font-weight: bold }
-.terminal-2072161689-r2 { fill: #c5c8c6 }
-.terminal-2072161689-r3 { fill: #398280 }
-.terminal-2072161689-r4 { fill: #868887 }
-.terminal-2072161689-r5 { fill: #68a0b3 }
-.terminal-2072161689-r6 { fill: #00823d }
-.terminal-2072161689-r7 { fill: #ff2627 }
-.terminal-2072161689-r8 { fill: #d08442 }
-.terminal-2072161689-r9 { fill: #ff2c7a }
-.terminal-2072161689-r10 { fill: #d0b344 }
+        .terminal-text {
+            font-family: "Fira Code", monospace;
+            font-size: 20px;
+            line-height: 24.4px;
+        }
+        .terminal-title {
+            font-size: 18px;
+            font-weight: bold;
+            font-family: arial;
+        }
     </style>
-
-    <defs>
-    <clipPath id="terminal-2072161689-clip-terminal">
-      <rect x="0" y="0" width="1500" height="1585.0" />
-    </clipPath>
-    <clipPath id="terminal-2072161689-line-0">
-    <rect x="0" y="1.5" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-1">
-    <rect x="0" y="25.9" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-2">
-    <rect x="0" y="50.3" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-3">
-    <rect x="0" y="74.7" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-4">
-    <rect x="0" y="99.1" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-5">
-    <rect x="0" y="123.5" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-6">
-    <rect x="0" y="147.9" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-7">
-    <rect x="0" y="172.3" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-8">
-    <rect x="0" y="196.7" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-9">
-    <rect x="0" y="221.1" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-10">
-    <rect x="0" y="245.5" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-11">
-    <rect x="0" y="269.9" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-12">
-    <rect x="0" y="294.3" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-13">
-    <rect x="0" y="318.7" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-14">
-    <rect x="0" y="343.1" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-15">
-    <rect x="0" y="367.5" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-16">
-    <rect x="0" y="391.9" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-17">
-    <rect x="0" y="416.3" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-18">
-    <rect x="0" y="440.7" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-19">
-    <rect x="0" y="465.1" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-20">
-    <rect x="0" y="489.5" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-21">
-    <rect x="0" y="513.9" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-22">
-    <rect x="0" y="538.3" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-23">
-    <rect x="0" y="562.7" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-24">
-    <rect x="0" y="587.1" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-25">
-    <rect x="0" y="611.5" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-26">
-    <rect x="0" y="635.9" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-27">
-    <rect x="0" y="660.3" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-28">
-    <rect x="0" y="684.7" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-29">
-    <rect x="0" y="709.1" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-30">
-    <rect x="0" y="733.5" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-31">
-    <rect x="0" y="757.9" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-32">
-    <rect x="0" y="782.3" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-33">
-    <rect x="0" y="806.7" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-34">
-    <rect x="0" y="831.1" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-35">
-    <rect x="0" y="855.5" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-36">
-    <rect x="0" y="879.9" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-37">
-    <rect x="0" y="904.3" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-38">
-    <rect x="0" y="928.7" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-39">
-    <rect x="0" y="953.1" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-40">
-    <rect x="0" y="977.5" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-41">
-    <rect x="0" y="1001.9" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-42">
-    <rect x="0" y="1026.3" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-43">
-    <rect x="0" y="1050.7" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-44">
-    <rect x="0" y="1075.1" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-45">
-    <rect x="0" y="1099.5" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-46">
-    <rect x="0" y="1123.9" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-47">
-    <rect x="0" y="1148.3" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-48">
-    <rect x="0" y="1172.7" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-49">
-    <rect x="0" y="1197.1" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-50">
-    <rect x="0" y="1221.5" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-51">
-    <rect x="0" y="1245.9" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-52">
-    <rect x="0" y="1270.3" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-53">
-    <rect x="0" y="1294.7" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-54">
-    <rect x="0" y="1319.1" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-55">
-    <rect x="0" y="1343.5" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-56">
-    <rect x="0" y="1367.9" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-57">
-    <rect x="0" y="1392.3" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-58">
-    <rect x="0" y="1416.7" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-59">
-    <rect x="0" y="1441.1" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-60">
-    <rect x="0" y="1465.5" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-61">
-    <rect x="0" y="1489.9" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-62">
-    <rect x="0" y="1514.3" width="1500" height="24.65"/>
-            </clipPath>
-<clipPath id="terminal-2072161689-line-63">
-    <rect x="0" y="1538.7" width="1500" height="24.65"/>
-            </clipPath>
-    </defs>
-
-    <rect fill="#292929" stroke="rgba(255,255,255,0.35)" stroke-width="1" x="1" y="1" width="1500" height="1634" rx="8"/><text class="terminal-2072161689-title" fill="#c5c8c6" text-anchor="middle" x="750" y="27">indexerinfo</text>
-            <g transform="translate(26,22)">
-            <circle cx="0" cy="0" r="7" fill="#ff5f57"/>
-            <circle cx="22" cy="0" r="7" fill="#febc2e"/>
-            <circle cx="44" cy="0" r="7" fill="#28c840"/>
-            </g>
-        
-    <g transform="translate(9, 41)" clip-path="url(#terminal-2072161689-clip-terminal)">
     
-    <g class="terminal-2072161689-matrix">
-    <text class="terminal-2072161689-r1" x="0" y="20" textLength="97.6" clip-path="url(#terminal-2072161689-line-0)">Indexer:</text><text class="terminal-2072161689-r3" x="109.8" y="20" textLength="244" clip-path="url(#terminal-2072161689-line-0)">ellipfra-indexer.eth</text><text class="terminal-2072161689-r2" x="353.8" y="20" textLength="549" clip-path="url(#terminal-2072161689-line-0)">&#160;(0xf92f430dd8567b0d466358c79594ab58d919a6d4)</text><text class="terminal-2072161689-r2" x="976" y="20" textLength="12.2" clip-path="url(#terminal-2072161689-line-0)">
-</text><text class="terminal-2072161689-r4" x="0" y="44.4" textLength="414.8" clip-path="url(#terminal-2072161689-line-1)">https://graph-l2prod.ellipfra.com/</text><text class="terminal-2072161689-r2" x="976" y="44.4" textLength="12.2" clip-path="url(#terminal-2072161689-line-1)">
-</text><text class="terminal-2072161689-r2" x="976" y="68.8" textLength="12.2" clip-path="url(#terminal-2072161689-line-2)">
-</text><text class="terminal-2072161689-r5" x="0" y="93.2" textLength="85.4" clip-path="url(#terminal-2072161689-line-3)">▸&#160;Stake</text><text class="terminal-2072161689-r2" x="976" y="93.2" textLength="12.2" clip-path="url(#terminal-2072161689-line-3)">
-</text><text class="terminal-2072161689-r2" x="0" y="117.6" textLength="231.8" clip-path="url(#terminal-2072161689-line-4)">&#160;&#160;Self&#160;stake:&#160;&#160;&#160;&#160;&#160;&#160;</text><text class="terminal-2072161689-r6" x="231.8" y="117.6" textLength="158.6" clip-path="url(#terminal-2072161689-line-4)">7,500,862&#160;GRT</text><text class="terminal-2072161689-r2" x="976" y="117.6" textLength="12.2" clip-path="url(#terminal-2072161689-line-4)">
-</text><text class="terminal-2072161689-r2" x="0" y="142" textLength="231.8" clip-path="url(#terminal-2072161689-line-5)">&#160;&#160;Delegated:&#160;&#160;&#160;&#160;&#160;&#160;&#160;</text><text class="terminal-2072161689-r3" x="231.8" y="142" textLength="183" clip-path="url(#terminal-2072161689-line-5)">109,196,582&#160;GRT</text><text class="terminal-2072161689-r2" x="414.8" y="142" textLength="305" clip-path="url(#terminal-2072161689-line-5)">&#160;/&#160;120,013,796&#160;GRT&#160;(91%)&#160;</text><text class="terminal-2072161689-r4" x="719.8" y="142" textLength="256.2" clip-path="url(#terminal-2072161689-line-5)">(1,911,206&#160;GRT&#160;thawin</text><text class="terminal-2072161689-r2" x="976" y="142" textLength="12.2" clip-path="url(#terminal-2072161689-line-5)">
-</text><text class="terminal-2072161689-r2" x="0" y="166.4" textLength="231.8" clip-path="url(#terminal-2072161689-line-6)">&#160;&#160;Delegation&#160;room:&#160;</text><text class="terminal-2072161689-r6" x="231.8" y="166.4" textLength="170.8" clip-path="url(#terminal-2072161689-line-6)">12,728,419&#160;GRT</text><text class="terminal-2072161689-r2" x="976" y="166.4" textLength="12.2" clip-path="url(#terminal-2072161689-line-6)">
-</text><text class="terminal-2072161689-r1" x="24.4" y="190.8" textLength="390.4" clip-path="url(#terminal-2072161689-line-7)">Total:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;114,356,236&#160;GRT</text><text class="terminal-2072161689-r2" x="976" y="190.8" textLength="12.2" clip-path="url(#terminal-2072161689-line-7)">
-</text><text class="terminal-2072161689-r2" x="0" y="215.2" textLength="414.8" clip-path="url(#terminal-2072161689-line-8)">&#160;&#160;Allocated:&#160;&#160;&#160;&#160;&#160;&#160;&#160;115,036,049&#160;GRT</text><text class="terminal-2072161689-r2" x="976" y="215.2" textLength="12.2" clip-path="url(#terminal-2072161689-line-8)">
-</text><text class="terminal-2072161689-r2" x="0" y="239.6" textLength="231.8" clip-path="url(#terminal-2072161689-line-9)">&#160;&#160;Remaining:&#160;&#160;&#160;&#160;&#160;&#160;&#160;</text><text class="terminal-2072161689-r7" x="231.8" y="239.6" textLength="451.4" clip-path="url(#terminal-2072161689-line-9)">-679,813&#160;GRT&#160;(-0.6%)&#160;⚠&#160;OVER-ALLOCATED</text><text class="terminal-2072161689-r2" x="976" y="239.6" textLength="12.2" clip-path="url(#terminal-2072161689-line-9)">
-</text><text class="terminal-2072161689-r2" x="976" y="264" textLength="12.2" clip-path="url(#terminal-2072161689-line-10)">
-</text><text class="terminal-2072161689-r5" x="0" y="288.4" textLength="158.6" clip-path="url(#terminal-2072161689-line-11)">▸&#160;Reward&#160;Cuts</text><text class="terminal-2072161689-r2" x="976" y="288.4" textLength="12.2" clip-path="url(#terminal-2072161689-line-11)">
-</text><text class="terminal-2072161689-r2" x="0" y="312.8" textLength="244" clip-path="url(#terminal-2072161689-line-12)">&#160;&#160;Indexing&#160;rewards:&#160;</text><text class="terminal-2072161689-r3" x="244" y="312.8" textLength="61" clip-path="url(#terminal-2072161689-line-12)">26.5%</text><text class="terminal-2072161689-r2" x="305" y="312.8" textLength="73.2" clip-path="url(#terminal-2072161689-line-12)">&#160;raw,&#160;</text><text class="terminal-2072161689-r8" x="378.2" y="312.8" textLength="61" clip-path="url(#terminal-2072161689-line-12)">21.5%</text><text class="terminal-2072161689-r2" x="439.2" y="312.8" textLength="292.8" clip-path="url(#terminal-2072161689-line-12)">&#160;effective&#160;on&#160;delegators</text><text class="terminal-2072161689-r2" x="976" y="312.8" textLength="12.2" clip-path="url(#terminal-2072161689-line-12)">
-</text><text class="terminal-2072161689-r2" x="0" y="337.2" textLength="244" clip-path="url(#terminal-2072161689-line-13)">&#160;&#160;Query&#160;fees:&#160;&#160;&#160;&#160;&#160;&#160;&#160;</text><text class="terminal-2072161689-r3" x="244" y="337.2" textLength="61" clip-path="url(#terminal-2072161689-line-13)">90.0%</text><text class="terminal-2072161689-r2" x="305" y="337.2" textLength="73.2" clip-path="url(#terminal-2072161689-line-13)">&#160;raw,&#160;</text><text class="terminal-2072161689-r8" x="378.2" y="337.2" textLength="61" clip-path="url(#terminal-2072161689-line-13)">89.3%</text><text class="terminal-2072161689-r2" x="439.2" y="337.2" textLength="292.8" clip-path="url(#terminal-2072161689-line-13)">&#160;effective&#160;on&#160;delegators</text><text class="terminal-2072161689-r2" x="976" y="337.2" textLength="12.2" clip-path="url(#terminal-2072161689-line-13)">
-</text><text class="terminal-2072161689-r2" x="976" y="361.6" textLength="12.2" clip-path="url(#terminal-2072161689-line-14)">
-</text><text class="terminal-2072161689-r5" x="0" y="386" textLength="427" clip-path="url(#terminal-2072161689-line-15)">▸&#160;Instant&#160;APR&#160;(current&#160;allocations)</text><text class="terminal-2072161689-r2" x="976" y="386" textLength="12.2" clip-path="url(#terminal-2072161689-line-15)">
-</text><text class="terminal-2072161689-r2" x="0" y="410.4" textLength="244" clip-path="url(#terminal-2072161689-line-16)">&#160;&#160;Expected&#160;rewards:&#160;</text><text class="terminal-2072161689-r3" x="244" y="410.4" textLength="231.8" clip-path="url(#terminal-2072161689-line-16)">38,698,387&#160;GRT/year</text><text class="terminal-2072161689-r2" x="976" y="410.4" textLength="12.2" clip-path="url(#terminal-2072161689-line-16)">
-</text><text class="terminal-2072161689-r2" x="0" y="434.8" textLength="536.8" clip-path="url(#terminal-2072161689-line-17)">&#160;&#160;Indexer&#160;share&#160;(26.5%):&#160;10,255,072&#160;GRT/year</text><text class="terminal-2072161689-r2" x="976" y="434.8" textLength="12.2" clip-path="url(#terminal-2072161689-line-17)">
-</text><text class="terminal-2072161689-r2" x="0" y="459.2" textLength="561.2" clip-path="url(#terminal-2072161689-line-18)">&#160;&#160;Delegator&#160;share&#160;(73.5%):&#160;28,443,314&#160;GRT/year</text><text class="terminal-2072161689-r2" x="976" y="459.2" textLength="12.2" clip-path="url(#terminal-2072161689-line-18)">
-</text><text class="terminal-2072161689-r2" x="0" y="483.6" textLength="219.6" clip-path="url(#terminal-2072161689-line-19)">&#160;&#160;APR&#160;Indexer:&#160;&#160;&#160;&#160;</text><text class="terminal-2072161689-r6" x="219.6" y="483.6" textLength="73.2" clip-path="url(#terminal-2072161689-line-19)">136.7%</text><text class="terminal-2072161689-r2" x="976" y="483.6" textLength="12.2" clip-path="url(#terminal-2072161689-line-19)">
-</text><text class="terminal-2072161689-r2" x="0" y="508" textLength="219.6" clip-path="url(#terminal-2072161689-line-20)">&#160;&#160;APR&#160;Delegators:&#160;</text><text class="terminal-2072161689-r6" x="219.6" y="508" textLength="73.2" clip-path="url(#terminal-2072161689-line-20)">26.05%</text><text class="terminal-2072161689-r2" x="976" y="508" textLength="12.2" clip-path="url(#terminal-2072161689-line-20)">
-</text><text class="terminal-2072161689-r2" x="976" y="532.4" textLength="12.2" clip-path="url(#terminal-2072161689-line-21)">
-</text><text class="terminal-2072161689-r5" x="0" y="556.8" textLength="158.6" clip-path="url(#terminal-2072161689-line-22)">▸&#160;Allocations</text><text class="terminal-2072161689-r2" x="976" y="556.8" textLength="12.2" clip-path="url(#terminal-2072161689-line-22)">
-</text><text class="terminal-2072161689-r2" x="0" y="581.2" textLength="122" clip-path="url(#terminal-2072161689-line-23)">&#160;&#160;Active:&#160;</text><text class="terminal-2072161689-r6" x="122" y="581.2" textLength="36.6" clip-path="url(#terminal-2072161689-line-23)">873</text><text class="terminal-2072161689-r2" x="158.6" y="581.2" textLength="183" clip-path="url(#terminal-2072161689-line-23)">&#160;|&#160;Total:&#160;28867</text><text class="terminal-2072161689-r2" x="976" y="581.2" textLength="12.2" clip-path="url(#terminal-2072161689-line-23)">
-</text><text class="terminal-2072161689-r2" x="976" y="605.6" textLength="12.2" clip-path="url(#terminal-2072161689-line-24)">
-</text><text class="terminal-2072161689-r5" x="0" y="630" textLength="195.2" clip-path="url(#terminal-2072161689-line-25)">▸&#160;Activity&#160;(48h)</text><text class="terminal-2072161689-r2" x="976" y="630" textLength="12.2" clip-path="url(#terminal-2072161689-line-25)">
-</text><text class="terminal-2072161689-r2" x="0" y="654.4" textLength="36.6" clip-path="url(#terminal-2072161689-line-26)">&#160;&#160;[</text><text class="terminal-2072161689-r9" x="36.6" y="654.4" textLength="12.2" clip-path="url(#terminal-2072161689-line-26)">↑</text><text class="terminal-2072161689-r2" x="48.8" y="654.4" textLength="24.4" clip-path="url(#terminal-2072161689-line-26)">]&#160;</text><text class="terminal-2072161689-r4" x="73.2" y="654.4" textLength="195.2" clip-path="url(#terminal-2072161689-line-26)">2025-12-19&#160;07:23</text><text class="terminal-2072161689-r2" x="268.4" y="654.4" textLength="561.2" clip-path="url(#terminal-2072161689-line-26)">&#160;&#160;0xcdc9228643134261d13b1093c56820c0b1980a42&#160;&#160;</text><text class="terminal-2072161689-r9" x="829.6" y="654.4" textLength="146.4" clip-path="url(#terminal-2072161689-line-26)">+1k&#160;GRT&#160;dele</text><text class="terminal-2072161689-r2" x="976" y="654.4" textLength="12.2" clip-path="url(#terminal-2072161689-line-26)">
-</text><text class="terminal-2072161689-r2" x="0" y="678.8" textLength="36.6" clip-path="url(#terminal-2072161689-line-27)">&#160;&#160;[</text><text class="terminal-2072161689-r10" x="36.6" y="678.8" textLength="12.2" clip-path="url(#terminal-2072161689-line-27)">↓</text><text class="terminal-2072161689-r2" x="48.8" y="678.8" textLength="24.4" clip-path="url(#terminal-2072161689-line-27)">]&#160;</text><text class="terminal-2072161689-r4" x="73.2" y="678.8" textLength="195.2" clip-path="url(#terminal-2072161689-line-27)">2025-12-19&#160;02:28</text><text class="terminal-2072161689-r2" x="268.4" y="678.8" textLength="561.2" clip-path="url(#terminal-2072161689-line-27)">&#160;&#160;0xdd48b3e41bc941cb048726ca411c613a52b7e0bb&#160;&#160;</text><text class="terminal-2072161689-r10" x="829.6" y="678.8" textLength="146.4" clip-path="url(#terminal-2072161689-line-27)">34k&#160;GRT&#160;thaw</text><text class="terminal-2072161689-r2" x="976" y="678.8" textLength="12.2" clip-path="url(#terminal-2072161689-line-27)">
-</text><text class="terminal-2072161689-r2" x="0" y="703.2" textLength="36.6" clip-path="url(#terminal-2072161689-line-28)">&#160;&#160;[</text><text class="terminal-2072161689-r10" x="36.6" y="703.2" textLength="12.2" clip-path="url(#terminal-2072161689-line-28)">↓</text><text class="terminal-2072161689-r2" x="48.8" y="703.2" textLength="24.4" clip-path="url(#terminal-2072161689-line-28)">]&#160;</text><text class="terminal-2072161689-r4" x="73.2" y="703.2" textLength="195.2" clip-path="url(#terminal-2072161689-line-28)">2025-12-19&#160;02:28</text><text class="terminal-2072161689-r2" x="268.4" y="703.2" textLength="561.2" clip-path="url(#terminal-2072161689-line-28)">&#160;&#160;0x8c447f1f1961af13d65a2227966dd56d75fb838b&#160;&#160;</text><text class="terminal-2072161689-r10" x="829.6" y="703.2" textLength="146.4" clip-path="url(#terminal-2072161689-line-28)">34k&#160;GRT&#160;thaw</text><text class="terminal-2072161689-r2" x="976" y="703.2" textLength="12.2" clip-path="url(#terminal-2072161689-line-28)">
-</text><text class="terminal-2072161689-r2" x="0" y="727.6" textLength="36.6" clip-path="url(#terminal-2072161689-line-29)">&#160;&#160;[</text><text class="terminal-2072161689-r10" x="36.6" y="727.6" textLength="12.2" clip-path="url(#terminal-2072161689-line-29)">↓</text><text class="terminal-2072161689-r2" x="48.8" y="727.6" textLength="24.4" clip-path="url(#terminal-2072161689-line-29)">]&#160;</text><text class="terminal-2072161689-r4" x="73.2" y="727.6" textLength="195.2" clip-path="url(#terminal-2072161689-line-29)">2025-12-19&#160;02:27</text><text class="terminal-2072161689-r2" x="268.4" y="727.6" textLength="561.2" clip-path="url(#terminal-2072161689-line-29)">&#160;&#160;0xf2a8e40305b6a2725cfec8c1bc5fac4659f22a01&#160;&#160;</text><text class="terminal-2072161689-r10" x="829.6" y="727.6" textLength="146.4" clip-path="url(#terminal-2072161689-line-29)">34k&#160;GRT&#160;thaw</text><text class="terminal-2072161689-r2" x="976" y="727.6" textLength="12.2" clip-path="url(#terminal-2072161689-line-29)">
-</text><text class="terminal-2072161689-r2" x="0" y="752" textLength="36.6" clip-path="url(#terminal-2072161689-line-30)">&#160;&#160;[</text><text class="terminal-2072161689-r10" x="36.6" y="752" textLength="12.2" clip-path="url(#terminal-2072161689-line-30)">↓</text><text class="terminal-2072161689-r2" x="48.8" y="752" textLength="24.4" clip-path="url(#terminal-2072161689-line-30)">]&#160;</text><text class="terminal-2072161689-r4" x="73.2" y="752" textLength="195.2" clip-path="url(#terminal-2072161689-line-30)">2025-12-19&#160;02:26</text><text class="terminal-2072161689-r2" x="268.4" y="752" textLength="561.2" clip-path="url(#terminal-2072161689-line-30)">&#160;&#160;0xbf4c65c29d9b103e8f0fd6b8817cd293b3b4298a&#160;&#160;</text><text class="terminal-2072161689-r10" x="829.6" y="752" textLength="146.4" clip-path="url(#terminal-2072161689-line-30)">34k&#160;GRT&#160;thaw</text><text class="terminal-2072161689-r2" x="976" y="752" textLength="12.2" clip-path="url(#terminal-2072161689-line-30)">
-</text><text class="terminal-2072161689-r2" x="0" y="776.4" textLength="36.6" clip-path="url(#terminal-2072161689-line-31)">&#160;&#160;[</text><text class="terminal-2072161689-r10" x="36.6" y="776.4" textLength="12.2" clip-path="url(#terminal-2072161689-line-31)">↓</text><text class="terminal-2072161689-r2" x="48.8" y="776.4" textLength="24.4" clip-path="url(#terminal-2072161689-line-31)">]&#160;</text><text class="terminal-2072161689-r4" x="73.2" y="776.4" textLength="195.2" clip-path="url(#terminal-2072161689-line-31)">2025-12-19&#160;02:26</text><text class="terminal-2072161689-r2" x="268.4" y="776.4" textLength="561.2" clip-path="url(#terminal-2072161689-line-31)">&#160;&#160;0xcc42893fd11e284d8734eee85915864e86aa0797&#160;&#160;</text><text class="terminal-2072161689-r10" x="829.6" y="776.4" textLength="146.4" clip-path="url(#terminal-2072161689-line-31)">34k&#160;GRT&#160;thaw</text><text class="terminal-2072161689-r2" x="976" y="776.4" textLength="12.2" clip-path="url(#terminal-2072161689-line-31)">
-</text><text class="terminal-2072161689-r2" x="0" y="800.8" textLength="36.6" clip-path="url(#terminal-2072161689-line-32)">&#160;&#160;[</text><text class="terminal-2072161689-r10" x="36.6" y="800.8" textLength="12.2" clip-path="url(#terminal-2072161689-line-32)">↓</text><text class="terminal-2072161689-r2" x="48.8" y="800.8" textLength="24.4" clip-path="url(#terminal-2072161689-line-32)">]&#160;</text><text class="terminal-2072161689-r4" x="73.2" y="800.8" textLength="195.2" clip-path="url(#terminal-2072161689-line-32)">2025-12-19&#160;02:25</text><text class="terminal-2072161689-r2" x="268.4" y="800.8" textLength="561.2" clip-path="url(#terminal-2072161689-line-32)">&#160;&#160;0xc5a80a9f031d111cd7af92746f9a661ae9c89966&#160;&#160;</text><text class="terminal-2072161689-r10" x="829.6" y="800.8" textLength="146.4" clip-path="url(#terminal-2072161689-line-32)">34k&#160;GRT&#160;thaw</text><text class="terminal-2072161689-r2" x="976" y="800.8" textLength="12.2" clip-path="url(#terminal-2072161689-line-32)">
-</text><text class="terminal-2072161689-r2" x="0" y="825.2" textLength="36.6" clip-path="url(#terminal-2072161689-line-33)">&#160;&#160;[</text><text class="terminal-2072161689-r10" x="36.6" y="825.2" textLength="12.2" clip-path="url(#terminal-2072161689-line-33)">↓</text><text class="terminal-2072161689-r2" x="48.8" y="825.2" textLength="24.4" clip-path="url(#terminal-2072161689-line-33)">]&#160;</text><text class="terminal-2072161689-r4" x="73.2" y="825.2" textLength="195.2" clip-path="url(#terminal-2072161689-line-33)">2025-12-19&#160;02:24</text><text class="terminal-2072161689-r2" x="268.4" y="825.2" textLength="561.2" clip-path="url(#terminal-2072161689-line-33)">&#160;&#160;0xeb8dd6d017fd8895132988de7870b2eec0cafd5b&#160;&#160;</text><text class="terminal-2072161689-r10" x="829.6" y="825.2" textLength="146.4" clip-path="url(#terminal-2072161689-line-33)">34k&#160;GRT&#160;thaw</text><text class="terminal-2072161689-r2" x="976" y="825.2" textLength="12.2" clip-path="url(#terminal-2072161689-line-33)">
-</text><text class="terminal-2072161689-r2" x="0" y="849.6" textLength="36.6" clip-path="url(#terminal-2072161689-line-34)">&#160;&#160;[</text><text class="terminal-2072161689-r10" x="36.6" y="849.6" textLength="12.2" clip-path="url(#terminal-2072161689-line-34)">↓</text><text class="terminal-2072161689-r2" x="48.8" y="849.6" textLength="24.4" clip-path="url(#terminal-2072161689-line-34)">]&#160;</text><text class="terminal-2072161689-r4" x="73.2" y="849.6" textLength="195.2" clip-path="url(#terminal-2072161689-line-34)">2025-12-19&#160;02:24</text><text class="terminal-2072161689-r2" x="268.4" y="849.6" textLength="561.2" clip-path="url(#terminal-2072161689-line-34)">&#160;&#160;0xe2338782f2894c63045cc06f0635b9a95d67a857&#160;&#160;</text><text class="terminal-2072161689-r10" x="829.6" y="849.6" textLength="146.4" clip-path="url(#terminal-2072161689-line-34)">34k&#160;GRT&#160;thaw</text><text class="terminal-2072161689-r2" x="976" y="849.6" textLength="12.2" clip-path="url(#terminal-2072161689-line-34)">
-</text><text class="terminal-2072161689-r2" x="0" y="874" textLength="36.6" clip-path="url(#terminal-2072161689-line-35)">&#160;&#160;[</text><text class="terminal-2072161689-r10" x="36.6" y="874" textLength="12.2" clip-path="url(#terminal-2072161689-line-35)">↓</text><text class="terminal-2072161689-r2" x="48.8" y="874" textLength="24.4" clip-path="url(#terminal-2072161689-line-35)">]&#160;</text><text class="terminal-2072161689-r4" x="73.2" y="874" textLength="195.2" clip-path="url(#terminal-2072161689-line-35)">2025-12-19&#160;02:23</text><text class="terminal-2072161689-r2" x="268.4" y="874" textLength="561.2" clip-path="url(#terminal-2072161689-line-35)">&#160;&#160;0x0dc98d8e3fe15f48dadb16b3a1971f380ce99062&#160;&#160;</text><text class="terminal-2072161689-r10" x="829.6" y="874" textLength="146.4" clip-path="url(#terminal-2072161689-line-35)">34k&#160;GRT&#160;thaw</text><text class="terminal-2072161689-r2" x="976" y="874" textLength="12.2" clip-path="url(#terminal-2072161689-line-35)">
-</text><text class="terminal-2072161689-r2" x="0" y="898.4" textLength="36.6" clip-path="url(#terminal-2072161689-line-36)">&#160;&#160;[</text><text class="terminal-2072161689-r10" x="36.6" y="898.4" textLength="12.2" clip-path="url(#terminal-2072161689-line-36)">↓</text><text class="terminal-2072161689-r2" x="48.8" y="898.4" textLength="24.4" clip-path="url(#terminal-2072161689-line-36)">]&#160;</text><text class="terminal-2072161689-r4" x="73.2" y="898.4" textLength="195.2" clip-path="url(#terminal-2072161689-line-36)">2025-12-19&#160;02:22</text><text class="terminal-2072161689-r2" x="268.4" y="898.4" textLength="561.2" clip-path="url(#terminal-2072161689-line-36)">&#160;&#160;0x7eec2096bc0a940e0eb1786c741b6c74fcd6ba21&#160;&#160;</text><text class="terminal-2072161689-r10" x="829.6" y="898.4" textLength="146.4" clip-path="url(#terminal-2072161689-line-36)">43k&#160;GRT&#160;thaw</text><text class="terminal-2072161689-r2" x="976" y="898.4" textLength="12.2" clip-path="url(#terminal-2072161689-line-36)">
-</text><text class="terminal-2072161689-r2" x="0" y="922.8" textLength="36.6" clip-path="url(#terminal-2072161689-line-37)">&#160;&#160;[</text><text class="terminal-2072161689-r10" x="36.6" y="922.8" textLength="12.2" clip-path="url(#terminal-2072161689-line-37)">↓</text><text class="terminal-2072161689-r2" x="48.8" y="922.8" textLength="24.4" clip-path="url(#terminal-2072161689-line-37)">]&#160;</text><text class="terminal-2072161689-r4" x="73.2" y="922.8" textLength="195.2" clip-path="url(#terminal-2072161689-line-37)">2025-12-19&#160;02:22</text><text class="terminal-2072161689-r2" x="268.4" y="922.8" textLength="561.2" clip-path="url(#terminal-2072161689-line-37)">&#160;&#160;0xaf062f4a526e9507424650d2cf86a969dd7ad26b&#160;&#160;</text><text class="terminal-2072161689-r10" x="829.6" y="922.8" textLength="146.4" clip-path="url(#terminal-2072161689-line-37)">43k&#160;GRT&#160;thaw</text><text class="terminal-2072161689-r2" x="976" y="922.8" textLength="12.2" clip-path="url(#terminal-2072161689-line-37)">
-</text><text class="terminal-2072161689-r2" x="0" y="947.2" textLength="36.6" clip-path="url(#terminal-2072161689-line-38)">&#160;&#160;[</text><text class="terminal-2072161689-r10" x="36.6" y="947.2" textLength="12.2" clip-path="url(#terminal-2072161689-line-38)">↓</text><text class="terminal-2072161689-r2" x="48.8" y="947.2" textLength="24.4" clip-path="url(#terminal-2072161689-line-38)">]&#160;</text><text class="terminal-2072161689-r4" x="73.2" y="947.2" textLength="195.2" clip-path="url(#terminal-2072161689-line-38)">2025-12-19&#160;02:21</text><text class="terminal-2072161689-r2" x="268.4" y="947.2" textLength="561.2" clip-path="url(#terminal-2072161689-line-38)">&#160;&#160;0xa31c0ecab0b8b133c56a321c96481dfe992a6bc3&#160;&#160;</text><text class="terminal-2072161689-r10" x="829.6" y="947.2" textLength="146.4" clip-path="url(#terminal-2072161689-line-38)">43k&#160;GRT&#160;thaw</text><text class="terminal-2072161689-r2" x="976" y="947.2" textLength="12.2" clip-path="url(#terminal-2072161689-line-38)">
-</text><text class="terminal-2072161689-r2" x="0" y="971.6" textLength="36.6" clip-path="url(#terminal-2072161689-line-39)">&#160;&#160;[</text><text class="terminal-2072161689-r10" x="36.6" y="971.6" textLength="12.2" clip-path="url(#terminal-2072161689-line-39)">↓</text><text class="terminal-2072161689-r2" x="48.8" y="971.6" textLength="24.4" clip-path="url(#terminal-2072161689-line-39)">]&#160;</text><text class="terminal-2072161689-r4" x="73.2" y="971.6" textLength="195.2" clip-path="url(#terminal-2072161689-line-39)">2025-12-19&#160;02:20</text><text class="terminal-2072161689-r2" x="268.4" y="971.6" textLength="561.2" clip-path="url(#terminal-2072161689-line-39)">&#160;&#160;0xd2b5c55f6268f0a224246e4f841926f6cf5ed003&#160;&#160;</text><text class="terminal-2072161689-r10" x="829.6" y="971.6" textLength="146.4" clip-path="url(#terminal-2072161689-line-39)">43k&#160;GRT&#160;thaw</text><text class="terminal-2072161689-r2" x="976" y="971.6" textLength="12.2" clip-path="url(#terminal-2072161689-line-39)">
-</text><text class="terminal-2072161689-r2" x="0" y="996" textLength="36.6" clip-path="url(#terminal-2072161689-line-40)">&#160;&#160;[</text><text class="terminal-2072161689-r10" x="36.6" y="996" textLength="12.2" clip-path="url(#terminal-2072161689-line-40)">↓</text><text class="terminal-2072161689-r2" x="48.8" y="996" textLength="24.4" clip-path="url(#terminal-2072161689-line-40)">]&#160;</text><text class="terminal-2072161689-r4" x="73.2" y="996" textLength="195.2" clip-path="url(#terminal-2072161689-line-40)">2025-12-19&#160;02:20</text><text class="terminal-2072161689-r2" x="268.4" y="996" textLength="561.2" clip-path="url(#terminal-2072161689-line-40)">&#160;&#160;0xb63c89a3a34b688ab7e12e83f0031061896918d3&#160;&#160;</text><text class="terminal-2072161689-r10" x="829.6" y="996" textLength="146.4" clip-path="url(#terminal-2072161689-line-40)">43k&#160;GRT&#160;thaw</text><text class="terminal-2072161689-r2" x="976" y="996" textLength="12.2" clip-path="url(#terminal-2072161689-line-40)">
-</text><text class="terminal-2072161689-r2" x="0" y="1020.4" textLength="36.6" clip-path="url(#terminal-2072161689-line-41)">&#160;&#160;[</text><text class="terminal-2072161689-r10" x="36.6" y="1020.4" textLength="12.2" clip-path="url(#terminal-2072161689-line-41)">↓</text><text class="terminal-2072161689-r2" x="48.8" y="1020.4" textLength="24.4" clip-path="url(#terminal-2072161689-line-41)">]&#160;</text><text class="terminal-2072161689-r4" x="73.2" y="1020.4" textLength="195.2" clip-path="url(#terminal-2072161689-line-41)">2025-12-19&#160;02:19</text><text class="terminal-2072161689-r2" x="268.4" y="1020.4" textLength="561.2" clip-path="url(#terminal-2072161689-line-41)">&#160;&#160;0x8ac4a0d8219eb87b0365978cadb5d7349d346dee&#160;&#160;</text><text class="terminal-2072161689-r10" x="829.6" y="1020.4" textLength="146.4" clip-path="url(#terminal-2072161689-line-41)">43k&#160;GRT&#160;thaw</text><text class="terminal-2072161689-r2" x="976" y="1020.4" textLength="12.2" clip-path="url(#terminal-2072161689-line-41)">
-</text><text class="terminal-2072161689-r2" x="0" y="1044.8" textLength="36.6" clip-path="url(#terminal-2072161689-line-42)">&#160;&#160;[</text><text class="terminal-2072161689-r10" x="36.6" y="1044.8" textLength="12.2" clip-path="url(#terminal-2072161689-line-42)">↓</text><text class="terminal-2072161689-r2" x="48.8" y="1044.8" textLength="24.4" clip-path="url(#terminal-2072161689-line-42)">]&#160;</text><text class="terminal-2072161689-r4" x="73.2" y="1044.8" textLength="195.2" clip-path="url(#terminal-2072161689-line-42)">2025-12-19&#160;02:18</text><text class="terminal-2072161689-r2" x="268.4" y="1044.8" textLength="561.2" clip-path="url(#terminal-2072161689-line-42)">&#160;&#160;0xcda8b418a64466691a522492945119e5ecf2f177&#160;&#160;</text><text class="terminal-2072161689-r10" x="829.6" y="1044.8" textLength="146.4" clip-path="url(#terminal-2072161689-line-42)">43k&#160;GRT&#160;thaw</text><text class="terminal-2072161689-r2" x="976" y="1044.8" textLength="12.2" clip-path="url(#terminal-2072161689-line-42)">
-</text><text class="terminal-2072161689-r2" x="0" y="1069.2" textLength="36.6" clip-path="url(#terminal-2072161689-line-43)">&#160;&#160;[</text><text class="terminal-2072161689-r10" x="36.6" y="1069.2" textLength="12.2" clip-path="url(#terminal-2072161689-line-43)">↓</text><text class="terminal-2072161689-r2" x="48.8" y="1069.2" textLength="24.4" clip-path="url(#terminal-2072161689-line-43)">]&#160;</text><text class="terminal-2072161689-r4" x="73.2" y="1069.2" textLength="195.2" clip-path="url(#terminal-2072161689-line-43)">2025-12-19&#160;02:17</text><text class="terminal-2072161689-r2" x="268.4" y="1069.2" textLength="561.2" clip-path="url(#terminal-2072161689-line-43)">&#160;&#160;0x1e1938f3092c44f34718ecfa9e4d110772632f9a&#160;&#160;</text><text class="terminal-2072161689-r10" x="829.6" y="1069.2" textLength="146.4" clip-path="url(#terminal-2072161689-line-43)">43k&#160;GRT&#160;thaw</text><text class="terminal-2072161689-r2" x="976" y="1069.2" textLength="12.2" clip-path="url(#terminal-2072161689-line-43)">
-</text><text class="terminal-2072161689-r2" x="0" y="1093.6" textLength="36.6" clip-path="url(#terminal-2072161689-line-44)">&#160;&#160;[</text><text class="terminal-2072161689-r10" x="36.6" y="1093.6" textLength="12.2" clip-path="url(#terminal-2072161689-line-44)">↓</text><text class="terminal-2072161689-r2" x="48.8" y="1093.6" textLength="24.4" clip-path="url(#terminal-2072161689-line-44)">]&#160;</text><text class="terminal-2072161689-r4" x="73.2" y="1093.6" textLength="195.2" clip-path="url(#terminal-2072161689-line-44)">2025-12-19&#160;02:17</text><text class="terminal-2072161689-r2" x="268.4" y="1093.6" textLength="561.2" clip-path="url(#terminal-2072161689-line-44)">&#160;&#160;0x2fa03947035b93223df4005709ee6bddf73c0dd1&#160;&#160;</text><text class="terminal-2072161689-r10" x="829.6" y="1093.6" textLength="146.4" clip-path="url(#terminal-2072161689-line-44)">43k&#160;GRT&#160;thaw</text><text class="terminal-2072161689-r2" x="976" y="1093.6" textLength="12.2" clip-path="url(#terminal-2072161689-line-44)">
-</text><text class="terminal-2072161689-r2" x="0" y="1118" textLength="36.6" clip-path="url(#terminal-2072161689-line-45)">&#160;&#160;[</text><text class="terminal-2072161689-r10" x="36.6" y="1118" textLength="12.2" clip-path="url(#terminal-2072161689-line-45)">↓</text><text class="terminal-2072161689-r2" x="48.8" y="1118" textLength="24.4" clip-path="url(#terminal-2072161689-line-45)">]&#160;</text><text class="terminal-2072161689-r4" x="73.2" y="1118" textLength="195.2" clip-path="url(#terminal-2072161689-line-45)">2025-12-19&#160;02:16</text><text class="terminal-2072161689-r2" x="268.4" y="1118" textLength="561.2" clip-path="url(#terminal-2072161689-line-45)">&#160;&#160;0xacbac9736c0c69150f209b3dff756b74489ba56c&#160;&#160;</text><text class="terminal-2072161689-r10" x="829.6" y="1118" textLength="146.4" clip-path="url(#terminal-2072161689-line-45)">43k&#160;GRT&#160;thaw</text><text class="terminal-2072161689-r2" x="976" y="1118" textLength="12.2" clip-path="url(#terminal-2072161689-line-45)">
-</text><text class="terminal-2072161689-r2" x="0" y="1142.4" textLength="36.6" clip-path="url(#terminal-2072161689-line-46)">&#160;&#160;[</text><text class="terminal-2072161689-r10" x="36.6" y="1142.4" textLength="12.2" clip-path="url(#terminal-2072161689-line-46)">↓</text><text class="terminal-2072161689-r2" x="48.8" y="1142.4" textLength="24.4" clip-path="url(#terminal-2072161689-line-46)">]&#160;</text><text class="terminal-2072161689-r4" x="73.2" y="1142.4" textLength="195.2" clip-path="url(#terminal-2072161689-line-46)">2025-12-19&#160;02:16</text><text class="terminal-2072161689-r2" x="268.4" y="1142.4" textLength="561.2" clip-path="url(#terminal-2072161689-line-46)">&#160;&#160;0x7d54bed31986fd001b4acdea7890540a8b87f5b9&#160;&#160;</text><text class="terminal-2072161689-r10" x="829.6" y="1142.4" textLength="146.4" clip-path="url(#terminal-2072161689-line-46)">43k&#160;GRT&#160;thaw</text><text class="terminal-2072161689-r2" x="976" y="1142.4" textLength="12.2" clip-path="url(#terminal-2072161689-line-46)">
-</text><text class="terminal-2072161689-r2" x="0" y="1166.8" textLength="36.6" clip-path="url(#terminal-2072161689-line-47)">&#160;&#160;[</text><text class="terminal-2072161689-r10" x="36.6" y="1166.8" textLength="12.2" clip-path="url(#terminal-2072161689-line-47)">↓</text><text class="terminal-2072161689-r2" x="48.8" y="1166.8" textLength="24.4" clip-path="url(#terminal-2072161689-line-47)">]&#160;</text><text class="terminal-2072161689-r4" x="73.2" y="1166.8" textLength="195.2" clip-path="url(#terminal-2072161689-line-47)">2025-12-19&#160;02:14</text><text class="terminal-2072161689-r2" x="268.4" y="1166.8" textLength="561.2" clip-path="url(#terminal-2072161689-line-47)">&#160;&#160;0xc3a62fd4ac3f7606892ea8eb0d827c9dddb96c7b&#160;&#160;</text><text class="terminal-2072161689-r10" x="829.6" y="1166.8" textLength="146.4" clip-path="url(#terminal-2072161689-line-47)">51k&#160;GRT&#160;thaw</text><text class="terminal-2072161689-r2" x="976" y="1166.8" textLength="12.2" clip-path="url(#terminal-2072161689-line-47)">
-</text><text class="terminal-2072161689-r2" x="0" y="1191.2" textLength="36.6" clip-path="url(#terminal-2072161689-line-48)">&#160;&#160;[</text><text class="terminal-2072161689-r10" x="36.6" y="1191.2" textLength="12.2" clip-path="url(#terminal-2072161689-line-48)">↓</text><text class="terminal-2072161689-r2" x="48.8" y="1191.2" textLength="24.4" clip-path="url(#terminal-2072161689-line-48)">]&#160;</text><text class="terminal-2072161689-r4" x="73.2" y="1191.2" textLength="195.2" clip-path="url(#terminal-2072161689-line-48)">2025-12-19&#160;02:13</text><text class="terminal-2072161689-r2" x="268.4" y="1191.2" textLength="561.2" clip-path="url(#terminal-2072161689-line-48)">&#160;&#160;0xaa6dcea900a494378201126e046a61cdb5d3340e&#160;&#160;</text><text class="terminal-2072161689-r10" x="829.6" y="1191.2" textLength="146.4" clip-path="url(#terminal-2072161689-line-48)">43k&#160;GRT&#160;thaw</text><text class="terminal-2072161689-r2" x="976" y="1191.2" textLength="12.2" clip-path="url(#terminal-2072161689-line-48)">
-</text><text class="terminal-2072161689-r2" x="0" y="1215.6" textLength="36.6" clip-path="url(#terminal-2072161689-line-49)">&#160;&#160;[</text><text class="terminal-2072161689-r10" x="36.6" y="1215.6" textLength="12.2" clip-path="url(#terminal-2072161689-line-49)">↓</text><text class="terminal-2072161689-r2" x="48.8" y="1215.6" textLength="24.4" clip-path="url(#terminal-2072161689-line-49)">]&#160;</text><text class="terminal-2072161689-r4" x="73.2" y="1215.6" textLength="195.2" clip-path="url(#terminal-2072161689-line-49)">2025-12-19&#160;02:12</text><text class="terminal-2072161689-r2" x="268.4" y="1215.6" textLength="561.2" clip-path="url(#terminal-2072161689-line-49)">&#160;&#160;0x71a1c67c2ac395524a9ad7cd4f659c3487155478&#160;&#160;</text><text class="terminal-2072161689-r10" x="829.6" y="1215.6" textLength="146.4" clip-path="url(#terminal-2072161689-line-49)">34k&#160;GRT&#160;thaw</text><text class="terminal-2072161689-r2" x="976" y="1215.6" textLength="12.2" clip-path="url(#terminal-2072161689-line-49)">
-</text><text class="terminal-2072161689-r2" x="0" y="1240" textLength="36.6" clip-path="url(#terminal-2072161689-line-50)">&#160;&#160;[</text><text class="terminal-2072161689-r10" x="36.6" y="1240" textLength="12.2" clip-path="url(#terminal-2072161689-line-50)">↓</text><text class="terminal-2072161689-r2" x="48.8" y="1240" textLength="24.4" clip-path="url(#terminal-2072161689-line-50)">]&#160;</text><text class="terminal-2072161689-r4" x="73.2" y="1240" textLength="195.2" clip-path="url(#terminal-2072161689-line-50)">2025-12-19&#160;02:11</text><text class="terminal-2072161689-r2" x="268.4" y="1240" textLength="561.2" clip-path="url(#terminal-2072161689-line-50)">&#160;&#160;0x37c85d0e09824c6e8a877bd0d0e92a704c4c0a28&#160;&#160;</text><text class="terminal-2072161689-r10" x="829.6" y="1240" textLength="146.4" clip-path="url(#terminal-2072161689-line-50)">34k&#160;GRT&#160;thaw</text><text class="terminal-2072161689-r2" x="976" y="1240" textLength="12.2" clip-path="url(#terminal-2072161689-line-50)">
-</text><text class="terminal-2072161689-r2" x="976" y="1264.4" textLength="12.2" clip-path="url(#terminal-2072161689-line-51)">
-</text><text class="terminal-2072161689-r5" x="0" y="1288.8" textLength="292.8" clip-path="url(#terminal-2072161689-line-52)">▸&#160;Top&#160;Active&#160;Allocations</text><text class="terminal-2072161689-r2" x="976" y="1288.8" textLength="12.2" clip-path="url(#terminal-2072161689-line-52)">
-</text><text class="terminal-2072161689-r2" x="24.4" y="1313.2" textLength="561.2" clip-path="url(#terminal-2072161689-line-53)">QmasYjypV6nTLp4iNH4Vjf7fksRNxAkAskqDdKf2DCsQkV</text><text class="terminal-2072161689-r2" x="585.6" y="1313.2" textLength="207.4" clip-path="url(#terminal-2072161689-line-53)">&#160;&#160;2,199,822&#160;GRT&#160;&#160;</text><text class="terminal-2072161689-r4" x="793" y="1313.2" textLength="183" clip-path="url(#terminal-2072161689-line-53)">&#160;&#160;9d&#160;12h&#160;&#160;signa</text><text class="terminal-2072161689-r2" x="976" y="1313.2" textLength="12.2" clip-path="url(#terminal-2072161689-line-53)">
-</text><text class="terminal-2072161689-r2" x="24.4" y="1337.6" textLength="561.2" clip-path="url(#terminal-2072161689-line-54)">QmV7EeFsKQDurfwTakfj9K77UuQVQ6cUtnPUQ2wfYcpXUa</text><text class="terminal-2072161689-r2" x="585.6" y="1337.6" textLength="207.4" clip-path="url(#terminal-2072161689-line-54)">&#160;&#160;1,649,209&#160;GRT&#160;&#160;</text><text class="terminal-2072161689-r4" x="793" y="1337.6" textLength="183" clip-path="url(#terminal-2072161689-line-54)">&#160;&#160;9d&#160;12h&#160;&#160;signa</text><text class="terminal-2072161689-r2" x="976" y="1337.6" textLength="12.2" clip-path="url(#terminal-2072161689-line-54)">
-</text><text class="terminal-2072161689-r2" x="24.4" y="1362" textLength="561.2" clip-path="url(#terminal-2072161689-line-55)">QmQEYSGSD8t7jTw4gS2dwC4DLvyZceR9fYQ432Ff1hZpCp</text><text class="terminal-2072161689-r2" x="585.6" y="1362" textLength="207.4" clip-path="url(#terminal-2072161689-line-55)">&#160;&#160;1,389,800&#160;GRT&#160;&#160;</text><text class="terminal-2072161689-r4" x="793" y="1362" textLength="183" clip-path="url(#terminal-2072161689-line-55)">&#160;&#160;9d&#160;11h&#160;&#160;signa</text><text class="terminal-2072161689-r2" x="976" y="1362" textLength="12.2" clip-path="url(#terminal-2072161689-line-55)">
-</text><text class="terminal-2072161689-r2" x="24.4" y="1386.4" textLength="561.2" clip-path="url(#terminal-2072161689-line-56)">Qmcdu8weFbmtZpeZaGs8vCpSdWKRPwyvDMX6CftYnW2KZB</text><text class="terminal-2072161689-r2" x="585.6" y="1386.4" textLength="207.4" clip-path="url(#terminal-2072161689-line-56)">&#160;&#160;1,310,548&#160;GRT&#160;&#160;</text><text class="terminal-2072161689-r4" x="793" y="1386.4" textLength="183" clip-path="url(#terminal-2072161689-line-56)">&#160;&#160;9d&#160;12h&#160;&#160;signa</text><text class="terminal-2072161689-r2" x="976" y="1386.4" textLength="12.2" clip-path="url(#terminal-2072161689-line-56)">
-</text><text class="terminal-2072161689-r2" x="24.4" y="1410.8" textLength="561.2" clip-path="url(#terminal-2072161689-line-57)">QmdAaDAUDCypVB85eFUkQMkS5DE1HV4s7WJb6iSiygNvAw</text><text class="terminal-2072161689-r2" x="585.6" y="1410.8" textLength="207.4" clip-path="url(#terminal-2072161689-line-57)">&#160;&#160;1,294,986&#160;GRT&#160;&#160;</text><text class="terminal-2072161689-r4" x="793" y="1410.8" textLength="183" clip-path="url(#terminal-2072161689-line-57)">&#160;&#160;9d&#160;11h&#160;&#160;signa</text><text class="terminal-2072161689-r2" x="976" y="1410.8" textLength="12.2" clip-path="url(#terminal-2072161689-line-57)">
-</text><text class="terminal-2072161689-r2" x="24.4" y="1435.2" textLength="561.2" clip-path="url(#terminal-2072161689-line-58)">QmQjVBdmgZdjHpQsXGSC5uryWLmPkkTAunHN2AnDApZBa3</text><text class="terminal-2072161689-r2" x="585.6" y="1435.2" textLength="207.4" clip-path="url(#terminal-2072161689-line-58)">&#160;&#160;1,175,756&#160;GRT&#160;&#160;</text><text class="terminal-2072161689-r4" x="793" y="1435.2" textLength="183" clip-path="url(#terminal-2072161689-line-58)">&#160;&#160;9d&#160;12h&#160;&#160;signa</text><text class="terminal-2072161689-r2" x="976" y="1435.2" textLength="12.2" clip-path="url(#terminal-2072161689-line-58)">
-</text><text class="terminal-2072161689-r2" x="24.4" y="1459.6" textLength="561.2" clip-path="url(#terminal-2072161689-line-59)">QmaVfEVk82mWRSoXkGetbJo94VrPyjPcahvdiFFKHjXhUu</text><text class="terminal-2072161689-r2" x="585.6" y="1459.6" textLength="207.4" clip-path="url(#terminal-2072161689-line-59)">&#160;&#160;1,165,491&#160;GRT&#160;&#160;</text><text class="terminal-2072161689-r4" x="793" y="1459.6" textLength="183" clip-path="url(#terminal-2072161689-line-59)">&#160;&#160;9d&#160;12h&#160;&#160;signa</text><text class="terminal-2072161689-r2" x="976" y="1459.6" textLength="12.2" clip-path="url(#terminal-2072161689-line-59)">
-</text><text class="terminal-2072161689-r2" x="24.4" y="1484" textLength="561.2" clip-path="url(#terminal-2072161689-line-60)">QmXsbEVrYcLYd6AcLJBLazsgW6uxQ5fS9uuHnD2NVGd7Pd</text><text class="terminal-2072161689-r2" x="585.6" y="1484" textLength="207.4" clip-path="url(#terminal-2072161689-line-60)">&#160;&#160;1,155,415&#160;GRT&#160;&#160;</text><text class="terminal-2072161689-r4" x="793" y="1484" textLength="183" clip-path="url(#terminal-2072161689-line-60)">&#160;&#160;&#160;&#160;&#160;19h&#160;&#160;signa</text><text class="terminal-2072161689-r2" x="976" y="1484" textLength="12.2" clip-path="url(#terminal-2072161689-line-60)">
-</text><text class="terminal-2072161689-r2" x="24.4" y="1508.4" textLength="561.2" clip-path="url(#terminal-2072161689-line-61)">QmWEfBuWNqtYwj6XcJyESVVeiN3UmcphMcVjySR1Qqm1yE</text><text class="terminal-2072161689-r2" x="585.6" y="1508.4" textLength="207.4" clip-path="url(#terminal-2072161689-line-61)">&#160;&#160;1,144,605&#160;GRT&#160;&#160;</text><text class="terminal-2072161689-r4" x="793" y="1508.4" textLength="183" clip-path="url(#terminal-2072161689-line-61)">&#160;&#160;9d&#160;12h&#160;&#160;signa</text><text class="terminal-2072161689-r2" x="976" y="1508.4" textLength="12.2" clip-path="url(#terminal-2072161689-line-61)">
-</text><text class="terminal-2072161689-r2" x="24.4" y="1532.8" textLength="561.2" clip-path="url(#terminal-2072161689-line-62)">QmbQBjZ1VUK42k1V6sn6PnP3BZ1vLZhUmzfDpyF9Eiwfgt</text><text class="terminal-2072161689-r2" x="585.6" y="1532.8" textLength="207.4" clip-path="url(#terminal-2072161689-line-62)">&#160;&#160;1,114,348&#160;GRT&#160;&#160;</text><text class="terminal-2072161689-r4" x="793" y="1532.8" textLength="183" clip-path="url(#terminal-2072161689-line-62)">&#160;&#160;9d&#160;12h&#160;&#160;signa</text><text class="terminal-2072161689-r2" x="976" y="1532.8" textLength="12.2" clip-path="url(#terminal-2072161689-line-62)">
-</text><text class="terminal-2072161689-r2" x="976" y="1557.2" textLength="12.2" clip-path="url(#terminal-2072161689-line-63)">
-</text><text class="terminal-2072161689-r2" x="976" y="1581.6" textLength="12.2" clip-path="url(#terminal-2072161689-line-64)">
-</text>
-    </g>
+    <defs>
+        <clipPath id="terminal-clip">
+            <rect x="0" y="0" width="1220.0" height="1619.0" />
+        </clipPath>
+    </defs>
+    
+    <!-- Background -->
+    <rect x="0" y="0" width="1260.0" height="1679.0" fill="#292929" stroke="#555" stroke-width="1"/>
+    
+    <!-- Title -->
+    <text class="terminal-title" x="630.0" y="30" text-anchor="middle" fill="#c5c8c6">indexerinfo</text>
+    
+    <!-- Terminal content -->
+    <g transform="translate(20, 40)" clip-path="url(#terminal-clip)">
+
+        <text class="terminal-text" x="0.0" y="24.4" fill="#c5c8c6" font-weight="bold" xml:space="preserve">Indexer:</text>
+        <text class="terminal-text" x="97.6" y="24.4" fill="#c5c8c6" font-weight="normal" xml:space="preserve"> </text>
+        <text class="terminal-text" x="109.8" y="24.4" fill="#398280" font-weight="normal" xml:space="preserve">ellipfra-indexer.eth</text>
+        <text class="terminal-text" x="353.8" y="24.4" fill="#c5c8c6" font-weight="normal" xml:space="preserve"> (0xf92f430dd8567b0d466358c79594ab58d919a6d4)</text>
+        <text class="terminal-text" x="0.0" y="48.8" fill="#c5c8c6" font-weight="normal" xml:space="preserve">https://graph-l2prod.ellipfra.com/</text>
+        <text class="terminal-text" x="0.0" y="104.9" fill="#398280" font-weight="normal" xml:space="preserve">▸ Stake</text>
+        <text class="terminal-text" x="0.0" y="129.3" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  Self stake:      </text>
+        <text class="terminal-text" x="231.8" y="129.3" fill="#00823d" font-weight="normal" xml:space="preserve">7,500,862 GRT</text>
+        <text class="terminal-text" x="0.0" y="153.7" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  Delegated:       </text>
+        <text class="terminal-text" x="231.8" y="153.7" fill="#398280" font-weight="normal" xml:space="preserve">109,196,582 GRT</text>
+        <text class="terminal-text" x="414.8" y="153.7" fill="#c5c8c6" font-weight="normal" xml:space="preserve"> / 120,013,796 GRT (91%) </text>
+        <text class="terminal-text" x="719.8" y="153.7" fill="#c5c8c6" font-weight="normal" xml:space="preserve">(1,911,206 GRT thawing)</text>
+        <text class="terminal-text" x="0.0" y="178.1" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  Delegation room: </text>
+        <text class="terminal-text" x="231.8" y="178.1" fill="#00823d" font-weight="normal" xml:space="preserve">12,728,419 GRT</text>
+        <text class="terminal-text" x="0.0" y="202.5" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  </text>
+        <text class="terminal-text" x="24.4" y="202.5" fill="#c5c8c6" font-weight="bold" xml:space="preserve">Total:           114,356,236 GRT</text>
+        <text class="terminal-text" x="0.0" y="226.9" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  Allocated:       115,036,049 GRT</text>
+        <text class="terminal-text" x="0.0" y="251.3" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  Remaining:       </text>
+        <text class="terminal-text" x="231.8" y="251.3" fill="#ff2627" font-weight="normal" xml:space="preserve">-679,813 GRT (-0.6%) ⚠ OVER-ALLOCATED</text>
+        <text class="terminal-text" x="0.0" y="307.4" fill="#398280" font-weight="normal" xml:space="preserve">▸ Reward Cuts</text>
+        <text class="terminal-text" x="0.0" y="331.8" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  Indexing rewards: </text>
+        <text class="terminal-text" x="244.0" y="331.8" fill="#398280" font-weight="normal" xml:space="preserve">26.5%</text>
+        <text class="terminal-text" x="305.0" y="331.8" fill="#c5c8c6" font-weight="normal" xml:space="preserve"> raw, </text>
+        <text class="terminal-text" x="378.2" y="331.8" fill="#d0b344" font-weight="normal" xml:space="preserve">21.5%</text>
+        <text class="terminal-text" x="439.2" y="331.8" fill="#c5c8c6" font-weight="normal" xml:space="preserve"> effective on delegators</text>
+        <text class="terminal-text" x="0.0" y="356.2" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  Query fees:       </text>
+        <text class="terminal-text" x="244.0" y="356.2" fill="#398280" font-weight="normal" xml:space="preserve">90.0%</text>
+        <text class="terminal-text" x="305.0" y="356.2" fill="#c5c8c6" font-weight="normal" xml:space="preserve"> raw, </text>
+        <text class="terminal-text" x="378.2" y="356.2" fill="#d0b344" font-weight="normal" xml:space="preserve">89.3%</text>
+        <text class="terminal-text" x="439.2" y="356.2" fill="#c5c8c6" font-weight="normal" xml:space="preserve"> effective on delegators</text>
+        <text class="terminal-text" x="0.0" y="412.4" fill="#398280" font-weight="normal" xml:space="preserve">▸ Instant APR (current allocations)</text>
+        <text class="terminal-text" x="0.0" y="436.8" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  Expected rewards: </text>
+        <text class="terminal-text" x="244.0" y="436.8" fill="#398280" font-weight="normal" xml:space="preserve">38,698,393 GRT/year</text>
+        <text class="terminal-text" x="0.0" y="461.2" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  Indexer share (26.5%): 10,255,074 GRT/year</text>
+        <text class="terminal-text" x="0.0" y="485.6" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  Delegator share (73.5%): 28,443,319 GRT/year</text>
+        <text class="terminal-text" x="0.0" y="510.0" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  APR Indexer:    </text>
+        <text class="terminal-text" x="219.6" y="510.0" fill="#00823d" font-weight="normal" xml:space="preserve">136.7%</text>
+        <text class="terminal-text" x="0.0" y="534.4" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  APR Delegators: </text>
+        <text class="terminal-text" x="219.6" y="534.4" fill="#00823d" font-weight="normal" xml:space="preserve">26.05%</text>
+        <text class="terminal-text" x="0.0" y="590.5" fill="#398280" font-weight="normal" xml:space="preserve">▸ Allocations</text>
+        <text class="terminal-text" x="0.0" y="614.9" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  Active: </text>
+        <text class="terminal-text" x="122.0" y="614.9" fill="#00823d" font-weight="normal" xml:space="preserve">873</text>
+        <text class="terminal-text" x="158.6" y="614.9" fill="#c5c8c6" font-weight="normal" xml:space="preserve"> | Total: 28867</text>
+        <text class="terminal-text" x="0.0" y="671.0" fill="#398280" font-weight="normal" xml:space="preserve">▸ Activity (48h)</text>
+        <text class="terminal-text" x="0.0" y="695.4" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  [</text>
+        <text class="terminal-text" x="36.6" y="695.4" fill="#ff2c7a" font-weight="normal" xml:space="preserve">↑</text>
+        <text class="terminal-text" x="48.8" y="695.4" fill="#c5c8c6" font-weight="normal" xml:space="preserve">] </text>
+        <text class="terminal-text" x="73.2" y="695.4" fill="#c5c8c6" font-weight="normal" xml:space="preserve">2025-12-19 07:23</text>
+        <text class="terminal-text" x="268.4" y="695.4" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  0xcdc9228643134261d13b1093c56820c0b1980a42  </text>
+        <text class="terminal-text" x="829.6" y="695.4" fill="#ff2c7a" font-weight="normal" xml:space="preserve">+1k GRT delegated</text>
+        <text class="terminal-text" x="0.0" y="719.8" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  [</text>
+        <text class="terminal-text" x="36.6" y="719.8" fill="#d08442" font-weight="normal" xml:space="preserve">↓</text>
+        <text class="terminal-text" x="48.8" y="719.8" fill="#c5c8c6" font-weight="normal" xml:space="preserve">] </text>
+        <text class="terminal-text" x="73.2" y="719.8" fill="#c5c8c6" font-weight="normal" xml:space="preserve">2025-12-19 02:28</text>
+        <text class="terminal-text" x="268.4" y="719.8" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  0xdd48b3e41bc941cb048726ca411c613a52b7e0bb  </text>
+        <text class="terminal-text" x="829.6" y="719.8" fill="#d08442" font-weight="normal" xml:space="preserve">34k GRT thawing, 0 remaining</text>
+        <text class="terminal-text" x="0.0" y="744.2" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  [</text>
+        <text class="terminal-text" x="36.6" y="744.2" fill="#d08442" font-weight="normal" xml:space="preserve">↓</text>
+        <text class="terminal-text" x="48.8" y="744.2" fill="#c5c8c6" font-weight="normal" xml:space="preserve">] </text>
+        <text class="terminal-text" x="73.2" y="744.2" fill="#c5c8c6" font-weight="normal" xml:space="preserve">2025-12-19 02:28</text>
+        <text class="terminal-text" x="268.4" y="744.2" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  0x8c447f1f1961af13d65a2227966dd56d75fb838b  </text>
+        <text class="terminal-text" x="829.6" y="744.2" fill="#d08442" font-weight="normal" xml:space="preserve">34k GRT thawing, 0 remaining</text>
+        <text class="terminal-text" x="0.0" y="768.6" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  [</text>
+        <text class="terminal-text" x="36.6" y="768.6" fill="#d08442" font-weight="normal" xml:space="preserve">↓</text>
+        <text class="terminal-text" x="48.8" y="768.6" fill="#c5c8c6" font-weight="normal" xml:space="preserve">] </text>
+        <text class="terminal-text" x="73.2" y="768.6" fill="#c5c8c6" font-weight="normal" xml:space="preserve">2025-12-19 02:27</text>
+        <text class="terminal-text" x="268.4" y="768.6" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  0xf2a8e40305b6a2725cfec8c1bc5fac4659f22a01  </text>
+        <text class="terminal-text" x="829.6" y="768.6" fill="#d08442" font-weight="normal" xml:space="preserve">34k GRT thawing, 0 remaining</text>
+        <text class="terminal-text" x="0.0" y="793.0" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  [</text>
+        <text class="terminal-text" x="36.6" y="793.0" fill="#d08442" font-weight="normal" xml:space="preserve">↓</text>
+        <text class="terminal-text" x="48.8" y="793.0" fill="#c5c8c6" font-weight="normal" xml:space="preserve">] </text>
+        <text class="terminal-text" x="73.2" y="793.0" fill="#c5c8c6" font-weight="normal" xml:space="preserve">2025-12-19 02:26</text>
+        <text class="terminal-text" x="268.4" y="793.0" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  0xbf4c65c29d9b103e8f0fd6b8817cd293b3b4298a  </text>
+        <text class="terminal-text" x="829.6" y="793.0" fill="#d08442" font-weight="normal" xml:space="preserve">34k GRT thawing, 0 remaining</text>
+        <text class="terminal-text" x="0.0" y="817.4" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  [</text>
+        <text class="terminal-text" x="36.6" y="817.4" fill="#d08442" font-weight="normal" xml:space="preserve">↓</text>
+        <text class="terminal-text" x="48.8" y="817.4" fill="#c5c8c6" font-weight="normal" xml:space="preserve">] </text>
+        <text class="terminal-text" x="73.2" y="817.4" fill="#c5c8c6" font-weight="normal" xml:space="preserve">2025-12-19 02:26</text>
+        <text class="terminal-text" x="268.4" y="817.4" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  0xcc42893fd11e284d8734eee85915864e86aa0797  </text>
+        <text class="terminal-text" x="829.6" y="817.4" fill="#d08442" font-weight="normal" xml:space="preserve">34k GRT thawing, 0 remaining</text>
+        <text class="terminal-text" x="0.0" y="841.8" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  [</text>
+        <text class="terminal-text" x="36.6" y="841.8" fill="#d08442" font-weight="normal" xml:space="preserve">↓</text>
+        <text class="terminal-text" x="48.8" y="841.8" fill="#c5c8c6" font-weight="normal" xml:space="preserve">] </text>
+        <text class="terminal-text" x="73.2" y="841.8" fill="#c5c8c6" font-weight="normal" xml:space="preserve">2025-12-19 02:25</text>
+        <text class="terminal-text" x="268.4" y="841.8" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  0xc5a80a9f031d111cd7af92746f9a661ae9c89966  </text>
+        <text class="terminal-text" x="829.6" y="841.8" fill="#d08442" font-weight="normal" xml:space="preserve">34k GRT thawing, 0 remaining</text>
+        <text class="terminal-text" x="0.0" y="866.2" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  [</text>
+        <text class="terminal-text" x="36.6" y="866.2" fill="#d08442" font-weight="normal" xml:space="preserve">↓</text>
+        <text class="terminal-text" x="48.8" y="866.2" fill="#c5c8c6" font-weight="normal" xml:space="preserve">] </text>
+        <text class="terminal-text" x="73.2" y="866.2" fill="#c5c8c6" font-weight="normal" xml:space="preserve">2025-12-19 02:24</text>
+        <text class="terminal-text" x="268.4" y="866.2" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  0xeb8dd6d017fd8895132988de7870b2eec0cafd5b  </text>
+        <text class="terminal-text" x="829.6" y="866.2" fill="#d08442" font-weight="normal" xml:space="preserve">34k GRT thawing, 0 remaining</text>
+        <text class="terminal-text" x="0.0" y="890.6" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  [</text>
+        <text class="terminal-text" x="36.6" y="890.6" fill="#d08442" font-weight="normal" xml:space="preserve">↓</text>
+        <text class="terminal-text" x="48.8" y="890.6" fill="#c5c8c6" font-weight="normal" xml:space="preserve">] </text>
+        <text class="terminal-text" x="73.2" y="890.6" fill="#c5c8c6" font-weight="normal" xml:space="preserve">2025-12-19 02:24</text>
+        <text class="terminal-text" x="268.4" y="890.6" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  0xe2338782f2894c63045cc06f0635b9a95d67a857  </text>
+        <text class="terminal-text" x="829.6" y="890.6" fill="#d08442" font-weight="normal" xml:space="preserve">34k GRT thawing, 0 remaining</text>
+        <text class="terminal-text" x="0.0" y="915.0" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  [</text>
+        <text class="terminal-text" x="36.6" y="915.0" fill="#d08442" font-weight="normal" xml:space="preserve">↓</text>
+        <text class="terminal-text" x="48.8" y="915.0" fill="#c5c8c6" font-weight="normal" xml:space="preserve">] </text>
+        <text class="terminal-text" x="73.2" y="915.0" fill="#c5c8c6" font-weight="normal" xml:space="preserve">2025-12-19 02:23</text>
+        <text class="terminal-text" x="268.4" y="915.0" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  0x0dc98d8e3fe15f48dadb16b3a1971f380ce99062  </text>
+        <text class="terminal-text" x="829.6" y="915.0" fill="#d08442" font-weight="normal" xml:space="preserve">34k GRT thawing, 0 remaining</text>
+        <text class="terminal-text" x="0.0" y="939.4" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  [</text>
+        <text class="terminal-text" x="36.6" y="939.4" fill="#d08442" font-weight="normal" xml:space="preserve">↓</text>
+        <text class="terminal-text" x="48.8" y="939.4" fill="#c5c8c6" font-weight="normal" xml:space="preserve">] </text>
+        <text class="terminal-text" x="73.2" y="939.4" fill="#c5c8c6" font-weight="normal" xml:space="preserve">2025-12-19 02:22</text>
+        <text class="terminal-text" x="268.4" y="939.4" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  0x7eec2096bc0a940e0eb1786c741b6c74fcd6ba21  </text>
+        <text class="terminal-text" x="829.6" y="939.4" fill="#d08442" font-weight="normal" xml:space="preserve">43k GRT thawing, 0 remaining</text>
+        <text class="terminal-text" x="0.0" y="963.8" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  [</text>
+        <text class="terminal-text" x="36.6" y="963.8" fill="#d08442" font-weight="normal" xml:space="preserve">↓</text>
+        <text class="terminal-text" x="48.8" y="963.8" fill="#c5c8c6" font-weight="normal" xml:space="preserve">] </text>
+        <text class="terminal-text" x="73.2" y="963.8" fill="#c5c8c6" font-weight="normal" xml:space="preserve">2025-12-19 02:22</text>
+        <text class="terminal-text" x="268.4" y="963.8" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  0xaf062f4a526e9507424650d2cf86a969dd7ad26b  </text>
+        <text class="terminal-text" x="829.6" y="963.8" fill="#d08442" font-weight="normal" xml:space="preserve">43k GRT thawing, 0 remaining</text>
+        <text class="terminal-text" x="0.0" y="988.2" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  [</text>
+        <text class="terminal-text" x="36.6" y="988.2" fill="#d08442" font-weight="normal" xml:space="preserve">↓</text>
+        <text class="terminal-text" x="48.8" y="988.2" fill="#c5c8c6" font-weight="normal" xml:space="preserve">] </text>
+        <text class="terminal-text" x="73.2" y="988.2" fill="#c5c8c6" font-weight="normal" xml:space="preserve">2025-12-19 02:21</text>
+        <text class="terminal-text" x="268.4" y="988.2" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  0xa31c0ecab0b8b133c56a321c96481dfe992a6bc3  </text>
+        <text class="terminal-text" x="829.6" y="988.2" fill="#d08442" font-weight="normal" xml:space="preserve">43k GRT thawing, 0 remaining</text>
+        <text class="terminal-text" x="0.0" y="1012.6" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  [</text>
+        <text class="terminal-text" x="36.6" y="1012.6" fill="#d08442" font-weight="normal" xml:space="preserve">↓</text>
+        <text class="terminal-text" x="48.8" y="1012.6" fill="#c5c8c6" font-weight="normal" xml:space="preserve">] </text>
+        <text class="terminal-text" x="73.2" y="1012.6" fill="#c5c8c6" font-weight="normal" xml:space="preserve">2025-12-19 02:20</text>
+        <text class="terminal-text" x="268.4" y="1012.6" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  0xd2b5c55f6268f0a224246e4f841926f6cf5ed003  </text>
+        <text class="terminal-text" x="829.6" y="1012.6" fill="#d08442" font-weight="normal" xml:space="preserve">43k GRT thawing, 0 remaining</text>
+        <text class="terminal-text" x="0.0" y="1037.0" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  [</text>
+        <text class="terminal-text" x="36.6" y="1037.0" fill="#d08442" font-weight="normal" xml:space="preserve">↓</text>
+        <text class="terminal-text" x="48.8" y="1037.0" fill="#c5c8c6" font-weight="normal" xml:space="preserve">] </text>
+        <text class="terminal-text" x="73.2" y="1037.0" fill="#c5c8c6" font-weight="normal" xml:space="preserve">2025-12-19 02:20</text>
+        <text class="terminal-text" x="268.4" y="1037.0" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  0xb63c89a3a34b688ab7e12e83f0031061896918d3  </text>
+        <text class="terminal-text" x="829.6" y="1037.0" fill="#d08442" font-weight="normal" xml:space="preserve">43k GRT thawing, 0 remaining</text>
+        <text class="terminal-text" x="0.0" y="1061.4" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  [</text>
+        <text class="terminal-text" x="36.6" y="1061.4" fill="#d08442" font-weight="normal" xml:space="preserve">↓</text>
+        <text class="terminal-text" x="48.8" y="1061.4" fill="#c5c8c6" font-weight="normal" xml:space="preserve">] </text>
+        <text class="terminal-text" x="73.2" y="1061.4" fill="#c5c8c6" font-weight="normal" xml:space="preserve">2025-12-19 02:19</text>
+        <text class="terminal-text" x="268.4" y="1061.4" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  0x8ac4a0d8219eb87b0365978cadb5d7349d346dee  </text>
+        <text class="terminal-text" x="829.6" y="1061.4" fill="#d08442" font-weight="normal" xml:space="preserve">43k GRT thawing, 0 remaining</text>
+        <text class="terminal-text" x="0.0" y="1085.8" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  [</text>
+        <text class="terminal-text" x="36.6" y="1085.8" fill="#d08442" font-weight="normal" xml:space="preserve">↓</text>
+        <text class="terminal-text" x="48.8" y="1085.8" fill="#c5c8c6" font-weight="normal" xml:space="preserve">] </text>
+        <text class="terminal-text" x="73.2" y="1085.8" fill="#c5c8c6" font-weight="normal" xml:space="preserve">2025-12-19 02:18</text>
+        <text class="terminal-text" x="268.4" y="1085.8" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  0xcda8b418a64466691a522492945119e5ecf2f177  </text>
+        <text class="terminal-text" x="829.6" y="1085.8" fill="#d08442" font-weight="normal" xml:space="preserve">43k GRT thawing, 0 remaining</text>
+        <text class="terminal-text" x="0.0" y="1110.2" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  [</text>
+        <text class="terminal-text" x="36.6" y="1110.2" fill="#d08442" font-weight="normal" xml:space="preserve">↓</text>
+        <text class="terminal-text" x="48.8" y="1110.2" fill="#c5c8c6" font-weight="normal" xml:space="preserve">] </text>
+        <text class="terminal-text" x="73.2" y="1110.2" fill="#c5c8c6" font-weight="normal" xml:space="preserve">2025-12-19 02:17</text>
+        <text class="terminal-text" x="268.4" y="1110.2" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  0x1e1938f3092c44f34718ecfa9e4d110772632f9a  </text>
+        <text class="terminal-text" x="829.6" y="1110.2" fill="#d08442" font-weight="normal" xml:space="preserve">43k GRT thawing, 0 remaining</text>
+        <text class="terminal-text" x="0.0" y="1134.6" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  [</text>
+        <text class="terminal-text" x="36.6" y="1134.6" fill="#d08442" font-weight="normal" xml:space="preserve">↓</text>
+        <text class="terminal-text" x="48.8" y="1134.6" fill="#c5c8c6" font-weight="normal" xml:space="preserve">] </text>
+        <text class="terminal-text" x="73.2" y="1134.6" fill="#c5c8c6" font-weight="normal" xml:space="preserve">2025-12-19 02:17</text>
+        <text class="terminal-text" x="268.4" y="1134.6" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  0x2fa03947035b93223df4005709ee6bddf73c0dd1  </text>
+        <text class="terminal-text" x="829.6" y="1134.6" fill="#d08442" font-weight="normal" xml:space="preserve">43k GRT thawing, 0 remaining</text>
+        <text class="terminal-text" x="0.0" y="1159.0" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  [</text>
+        <text class="terminal-text" x="36.6" y="1159.0" fill="#d08442" font-weight="normal" xml:space="preserve">↓</text>
+        <text class="terminal-text" x="48.8" y="1159.0" fill="#c5c8c6" font-weight="normal" xml:space="preserve">] </text>
+        <text class="terminal-text" x="73.2" y="1159.0" fill="#c5c8c6" font-weight="normal" xml:space="preserve">2025-12-19 02:16</text>
+        <text class="terminal-text" x="268.4" y="1159.0" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  0xacbac9736c0c69150f209b3dff756b74489ba56c  </text>
+        <text class="terminal-text" x="829.6" y="1159.0" fill="#d08442" font-weight="normal" xml:space="preserve">43k GRT thawing, 0 remaining</text>
+        <text class="terminal-text" x="0.0" y="1183.4" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  [</text>
+        <text class="terminal-text" x="36.6" y="1183.4" fill="#d08442" font-weight="normal" xml:space="preserve">↓</text>
+        <text class="terminal-text" x="48.8" y="1183.4" fill="#c5c8c6" font-weight="normal" xml:space="preserve">] </text>
+        <text class="terminal-text" x="73.2" y="1183.4" fill="#c5c8c6" font-weight="normal" xml:space="preserve">2025-12-19 02:16</text>
+        <text class="terminal-text" x="268.4" y="1183.4" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  0x7d54bed31986fd001b4acdea7890540a8b87f5b9  </text>
+        <text class="terminal-text" x="829.6" y="1183.4" fill="#d08442" font-weight="normal" xml:space="preserve">43k GRT thawing, 0 remaining</text>
+        <text class="terminal-text" x="0.0" y="1207.8" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  [</text>
+        <text class="terminal-text" x="36.6" y="1207.8" fill="#d08442" font-weight="normal" xml:space="preserve">↓</text>
+        <text class="terminal-text" x="48.8" y="1207.8" fill="#c5c8c6" font-weight="normal" xml:space="preserve">] </text>
+        <text class="terminal-text" x="73.2" y="1207.8" fill="#c5c8c6" font-weight="normal" xml:space="preserve">2025-12-19 02:14</text>
+        <text class="terminal-text" x="268.4" y="1207.8" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  0xc3a62fd4ac3f7606892ea8eb0d827c9dddb96c7b  </text>
+        <text class="terminal-text" x="829.6" y="1207.8" fill="#d08442" font-weight="normal" xml:space="preserve">51k GRT thawing, 0 remaining</text>
+        <text class="terminal-text" x="0.0" y="1232.2" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  [</text>
+        <text class="terminal-text" x="36.6" y="1232.2" fill="#d08442" font-weight="normal" xml:space="preserve">↓</text>
+        <text class="terminal-text" x="48.8" y="1232.2" fill="#c5c8c6" font-weight="normal" xml:space="preserve">] </text>
+        <text class="terminal-text" x="73.2" y="1232.2" fill="#c5c8c6" font-weight="normal" xml:space="preserve">2025-12-19 02:13</text>
+        <text class="terminal-text" x="268.4" y="1232.2" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  0xaa6dcea900a494378201126e046a61cdb5d3340e  </text>
+        <text class="terminal-text" x="829.6" y="1232.2" fill="#d08442" font-weight="normal" xml:space="preserve">43k GRT thawing, 0 remaining</text>
+        <text class="terminal-text" x="0.0" y="1256.6" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  [</text>
+        <text class="terminal-text" x="36.6" y="1256.6" fill="#d08442" font-weight="normal" xml:space="preserve">↓</text>
+        <text class="terminal-text" x="48.8" y="1256.6" fill="#c5c8c6" font-weight="normal" xml:space="preserve">] </text>
+        <text class="terminal-text" x="73.2" y="1256.6" fill="#c5c8c6" font-weight="normal" xml:space="preserve">2025-12-19 02:12</text>
+        <text class="terminal-text" x="268.4" y="1256.6" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  0x71a1c67c2ac395524a9ad7cd4f659c3487155478  </text>
+        <text class="terminal-text" x="829.6" y="1256.6" fill="#d08442" font-weight="normal" xml:space="preserve">34k GRT thawing, 0 remaining</text>
+        <text class="terminal-text" x="0.0" y="1281.0" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  [</text>
+        <text class="terminal-text" x="36.6" y="1281.0" fill="#d08442" font-weight="normal" xml:space="preserve">↓</text>
+        <text class="terminal-text" x="48.8" y="1281.0" fill="#c5c8c6" font-weight="normal" xml:space="preserve">] </text>
+        <text class="terminal-text" x="73.2" y="1281.0" fill="#c5c8c6" font-weight="normal" xml:space="preserve">2025-12-19 02:11</text>
+        <text class="terminal-text" x="268.4" y="1281.0" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  0x37c85d0e09824c6e8a877bd0d0e92a704c4c0a28  </text>
+        <text class="terminal-text" x="829.6" y="1281.0" fill="#d08442" font-weight="normal" xml:space="preserve">34k GRT thawing, 0 remaining</text>
+        <text class="terminal-text" x="0.0" y="1337.1" fill="#398280" font-weight="normal" xml:space="preserve">▸ Top Active Allocations</text>
+        <text class="terminal-text" x="0.0" y="1361.5" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  QmasYjypV6nTLp4iNH4Vjf7fksRNxAkAskqDdKf2DCsQkV  2,199,822 GRT  </text>
+        <text class="terminal-text" x="793.0" y="1361.5" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  9d 12h  signal: 38,983</text>
+        <text class="terminal-text" x="0.0" y="1385.9" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  QmV7EeFsKQDurfwTakfj9K77UuQVQ6cUtnPUQ2wfYcpXUa  1,649,209 GRT  </text>
+        <text class="terminal-text" x="793.0" y="1385.9" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  9d 12h  signal: 29,580</text>
+        <text class="terminal-text" x="0.0" y="1410.3" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  QmQEYSGSD8t7jTw4gS2dwC4DLvyZceR9fYQ432Ff1hZpCp  1,389,800 GRT  </text>
+        <text class="terminal-text" x="793.0" y="1410.3" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  9d 12h  signal: 52,523</text>
+        <text class="terminal-text" x="0.0" y="1434.7" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  Qmcdu8weFbmtZpeZaGs8vCpSdWKRPwyvDMX6CftYnW2KZB  1,310,548 GRT  </text>
+        <text class="terminal-text" x="793.0" y="1434.7" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  9d 12h  signal: 23,900</text>
+        <text class="terminal-text" x="0.0" y="1459.1" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  QmdAaDAUDCypVB85eFUkQMkS5DE1HV4s7WJb6iSiygNvAw  1,294,986 GRT  </text>
+        <text class="terminal-text" x="793.0" y="1459.1" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  9d 12h  signal: 44,628</text>
+        <text class="terminal-text" x="0.0" y="1483.5" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  QmQjVBdmgZdjHpQsXGSC5uryWLmPkkTAunHN2AnDApZBa3  1,175,756 GRT  </text>
+        <text class="terminal-text" x="793.0" y="1483.5" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  9d 12h  signal: 20,387</text>
+        <text class="terminal-text" x="0.0" y="1507.9" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  QmaVfEVk82mWRSoXkGetbJo94VrPyjPcahvdiFFKHjXhUu  1,165,491 GRT  </text>
+        <text class="terminal-text" x="793.0" y="1507.9" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  9d 12h  signal: 20,538</text>
+        <text class="terminal-text" x="0.0" y="1532.3" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  QmXsbEVrYcLYd6AcLJBLazsgW6uxQ5fS9uuHnD2NVGd7Pd  1,155,415 GRT  </text>
+        <text class="terminal-text" x="793.0" y="1532.3" fill="#c5c8c6" font-weight="normal" xml:space="preserve">     19h  signal: 24,427</text>
+        <text class="terminal-text" x="0.0" y="1556.7" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  QmWEfBuWNqtYwj6XcJyESVVeiN3UmcphMcVjySR1Qqm1yE  1,144,605 GRT  </text>
+        <text class="terminal-text" x="793.0" y="1556.7" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  9d 12h  signal: 19,998</text>
+        <text class="terminal-text" x="0.0" y="1581.1" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  QmbQBjZ1VUK42k1V6sn6PnP3BZ1vLZhUmzfDpyF9Eiwfgt  1,114,348 GRT  </text>
+        <text class="terminal-text" x="793.0" y="1581.1" fill="#c5c8c6" font-weight="normal" xml:space="preserve">  9d 12h  signal: 19,900</text>
     </g>
 </svg>

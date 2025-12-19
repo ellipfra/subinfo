@@ -27,7 +27,10 @@ import requests
 from pathlib import Path
 
 def terminal_link(url: str, text: str) -> str:
-    """Create a clickable terminal hyperlink (OSC 8)"""
+    """Create a clickable terminal hyperlink (OSC 8)
+    Can be disabled by setting NO_HYPERLINKS=1 environment variable"""
+    if os.environ.get('NO_HYPERLINKS') == '1':
+        return text
     return f'\033]8;;{url}\033\\{text}\033]8;;\033\\'
 
 
