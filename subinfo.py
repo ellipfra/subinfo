@@ -64,23 +64,6 @@ class Colors:
     # Styles
     DIM = '\033[2m'
     
-    @staticmethod
-    def disable():
-        """Disable colors (for file redirection)"""
-        Colors.RESET = ''
-        Colors.BOLD = ''
-        Colors.GREEN = Colors.BRIGHT_GREEN = ''
-        Colors.RED = Colors.BRIGHT_RED = ''
-        Colors.YELLOW = Colors.BRIGHT_YELLOW = ''
-        Colors.BLUE = Colors.BRIGHT_BLUE = ''
-        Colors.MAGENTA = Colors.BRIGHT_MAGENTA = ''
-        Colors.CYAN = Colors.BRIGHT_CYAN = ''
-        Colors.WHITE = ''
-        Colors.DIM = ''
-
-# Disable colors if output is not a terminal
-if not sys.stdout.isatty():
-    Colors.disable()
 
 
 class TheGraphClient:
@@ -1335,10 +1318,10 @@ def print_allocations(allocations: List[Dict], title: str, my_indexer_id: Option
         indexer_display_width = get_display_width(indexer_display)
         tokens_str_width = get_display_width(tokens_str)
         
-        # Target widths: marker=1, indexer=37, tokens=18, date=16
+        # Target widths: marker=1, indexer=32, tokens=17, date=16
         marker_padding = max(0, 1 - marker_width)
-        indexer_padding = max(0, 37 - indexer_display_width)
-        tokens_padding = max(0, 18 - tokens_str_width)
+        indexer_padding = max(0, 32 - indexer_display_width)
+        tokens_padding = max(0, 17 - tokens_str_width)
         
         if alloc.get('closedAt'):
             closed = format_timestamp(str(alloc.get('closedAt', '0')))[:16]
@@ -1475,11 +1458,11 @@ def print_allocations_timeline(allocations: List[Dict], unallocations: List[Dict
         indexer_display_width = get_display_width(indexer_display)
         tokens_str_width = get_display_width(tokens_str)
         
-        # Target widths: symbol=1, marker=1, indexer=37, tokens=18, date=16
+        # Target widths: symbol=1, marker=1, indexer=32, tokens=17, date=16
         symbol_padding = max(0, 1 - symbol_width)
         marker_padding = max(0, 1 - marker_width)
-        indexer_padding = max(0, 37 - indexer_display_width)
-        tokens_padding = max(0, 18 - tokens_str_width)
+        indexer_padding = max(0, 32 - indexer_display_width)
+        tokens_padding = max(0, 17 - tokens_str_width)
         
         if event['type'] == 'allocation':
             if event.get('closedAt'):
@@ -1682,7 +1665,7 @@ def get_ens_subgraph_url() -> Optional[str]:
     return None
 
 
-def format_indexer_display(indexer_id: str, ens_name: Optional[str] = None, url: Optional[str] = None, max_width: int = 37) -> str:
+def format_indexer_display(indexer_id: str, ens_name: Optional[str] = None, url: Optional[str] = None, max_width: int = 32) -> str:
     """Format indexer display with ENS name or URL if available, truncated to max_width"""
     if ens_name:
         # Format: "ens_name (0x1234..)"
