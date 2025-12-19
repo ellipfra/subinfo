@@ -349,31 +349,50 @@ class TheGraphClient:
         result = self.query(query)
         return result.get('allocations', [])
     
-    def get_delegation_events(self, indexer_id: str, hours: int = 48) -> List[Dict]:
+    def get_delegation_events(self, indexer_id: str, hours: int = 48) -> Tuple[List[Dict], List[Dict]]:
         """Get recent delegation/undelegation events for an indexer"""
         cutoff_time = int((datetime.now() - timedelta(hours=hours)).timestamp())
         
-        # Get delegation events (shares minted = delegation)
-        query = f"""
+        # Get recent delegations (based on lastDelegatedAt)
+        delegation_query = f"""
         {{
             delegatedStakes(
-                where: {{ indexer: "{indexer_id.lower()}", createdAt_gte: {cutoff_time} }}
-                orderBy: createdAt
+                where: {{ indexer: "{indexer_id.lower()}", lastDelegatedAt_gte: {cutoff_time} }}
+                orderBy: lastDelegatedAt
                 orderDirection: desc
                 first: 100
             ) {{
                 id
                 delegator {{ id }}
                 stakedTokens
-                shareAmount
                 createdAt
                 lastDelegatedAt
+            }}
+        }}
+        """
+        delegations = self.query(delegation_query).get('delegatedStakes', [])
+        
+        # Get recent undelegations (based on lastUndelegatedAt)
+        # lockedTokens = amount in thawing period after undelegation
+        undelegation_query = f"""
+        {{
+            delegatedStakes(
+                where: {{ indexer: "{indexer_id.lower()}", lastUndelegatedAt_gte: {cutoff_time} }}
+                orderBy: lastUndelegatedAt
+                orderDirection: desc
+                first: 100
+            ) {{
+                id
+                delegator {{ id }}
+                stakedTokens
+                lockedTokens
                 lastUndelegatedAt
             }}
         }}
         """
-        result = self.query(query)
-        return result.get('delegatedStakes', [])
+        undelegations = self.query(undelegation_query).get('delegatedStakes', [])
+        
+        return delegations, undelegations
 
 
 class ENSClient:
@@ -692,7 +711,9 @@ Examples:
     # Delegation capacity (16x multiplier is the protocol default)
     delegation_ratio = 16
     max_delegation = self_stake * delegation_ratio
-    delegation_remaining = max(0, max_delegation - delegated)
+    # Use delegated_capacity (active delegations) for remaining room
+    # Tokens in thawing are leaving, so they free up space
+    delegation_remaining = max(0, max_delegation - delegated_capacity)
     delegation_used_pct = (delegated / max_delegation * 100) if max_delegation > 0 else 0
     
     print(f"  Self stake:      {Colors.BRIGHT_GREEN}{format_tokens(str(self_stake))}{Colors.RESET}")
@@ -803,7 +824,7 @@ Examples:
     # Get allocation history
     active_allocs, closed_allocs = client.get_indexer_allocations(indexer_id, args.hours)
     poi_submissions = client.get_indexer_poi_submissions(indexer_id, args.hours)
-    delegation_stakes = client.get_delegation_events(indexer_id, args.hours)
+    recent_delegations, recent_undelegations = client.get_delegation_events(indexer_id, args.hours)
     
     # Build timeline
     events = []
@@ -849,30 +870,36 @@ Examples:
                 'subgraph_id': get_subgraph_id_from_deployment(deployment)
             })
     
-    # Delegation events
-    for stake in delegation_stakes:
+    # Recent delegations
+    for stake in recent_delegations:
         delegator_id = stake.get('delegator', {}).get('id', '?')
         staked_tokens = stake.get('stakedTokens', '0')
-        
-        # Check for recent delegation
+        created_at = int(stake.get('createdAt') or 0)
         delegated_at = int(stake.get('lastDelegatedAt') or 0)
-        if delegated_at >= cutoff_ts:
-            events.append({
-                'type': 'delegate',
-                'timestamp': delegated_at,
-                'tokens': staked_tokens,
-                'delegator': delegator_id
-            })
-        
-        # Check for recent undelegation
+        # If createdAt is within the period, it's a new delegation (initial amount)
+        # Otherwise it's an increase to existing delegation (total shown)
+        is_new = created_at >= cutoff_ts
+        events.append({
+            'type': 'delegate',
+            'timestamp': delegated_at,
+            'tokens': staked_tokens,
+            'delegator': delegator_id,
+            'is_new': is_new
+        })
+    
+    # Recent undelegations - use lockedTokens (amount in thawing) 
+    for stake in recent_undelegations:
+        delegator_id = stake.get('delegator', {}).get('id', '?')
+        locked_tokens = stake.get('lockedTokens', '0')  # Amount being undelegated
+        remaining_tokens = stake.get('stakedTokens', '0')  # Amount still delegated
         undelegated_at = int(stake.get('lastUndelegatedAt') or 0)
-        if undelegated_at >= cutoff_ts:
-            events.append({
-                'type': 'undelegate',
-                'timestamp': undelegated_at,
-                'tokens': staked_tokens,
-                'delegator': delegator_id
-            })
+        events.append({
+            'type': 'undelegate',
+            'timestamp': undelegated_at,
+            'tokens': locked_tokens,  # Show the undelegated amount
+            'remaining': remaining_tokens,  # Keep track of remaining
+            'delegator': delegator_id
+        })
     
     if events:
         print_section(f"Activity ({args.hours}h)")
@@ -906,13 +933,21 @@ Examples:
             elif event['type'] == 'delegate':
                 symbol = f"{Colors.BRIGHT_MAGENTA}↑{Colors.RESET}"
                 target = event.get('delegator', '?')
-                details = f"{Colors.BRIGHT_MAGENTA}+{tokens} GRT delegated{Colors.RESET}"
+                is_new = event.get('is_new', False)
+                if is_new:
+                    # New delegation - tokens is the initial amount
+                    details = f"{Colors.BRIGHT_MAGENTA}+{tokens} GRT delegated{Colors.RESET}"
+                else:
+                    # Increase to existing - tokens is the total (we don't know how much was added)
+                    details = f"{Colors.BRIGHT_MAGENTA}now {tokens} GRT (increased){Colors.RESET}"
             elif event['type'] == 'undelegate':
                 symbol = f"{Colors.YELLOW}↓{Colors.RESET}"
                 target = event.get('delegator', '?')
-                # Note: stakedTokens is the REMAINING amount, not the undelegated amount
-                # So we just show "undelegated" without the amount
-                details = f"{Colors.YELLOW}undelegated{Colors.RESET}"
+                # lockedTokens = amount in thawing period
+                thawing_tokens = format_tokens_short(event['tokens'])
+                remaining = int(event.get('remaining', '0')) / 1e18
+                remaining_str = f"{remaining:,.0f}" if remaining >= 1 else "0"
+                details = f"{Colors.YELLOW}{thawing_tokens} GRT thawing, {remaining_str} remaining{Colors.RESET}"
             else:
                 continue
             
