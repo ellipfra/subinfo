@@ -26,6 +26,9 @@ from typing import Dict, List, Optional, Tuple
 import requests
 from pathlib import Path
 
+# Import shared sync status functionality
+from sync_status import IndexerStatusClient, format_sync_status as _format_sync_status, format_sync_status_detailed
+
 def terminal_link(url: str, text: str) -> str:
     """Create a clickable terminal hyperlink (OSC 8)
     Can be disabled by setting NO_HYPERLINKS=1 environment variable"""
@@ -1253,7 +1256,7 @@ def get_indexer_reward_cut(indexer_id: str, network_url: str) -> Optional[float]
         return None
 
 
-def print_allocations(allocations: List[Dict], title: str, my_indexer_id: Optional[str] = None, ens_client: Optional[ENSClient] = None, indexer_urls: Optional[Dict[str, str]] = None, reward_proportion: Optional[float] = None, network_url: Optional[str] = None):
+def print_allocations(allocations: List[Dict], title: str, my_indexer_id: Optional[str] = None, ens_client: Optional[ENSClient] = None, indexer_urls: Optional[Dict[str, str]] = None, reward_proportion: Optional[float] = None, network_url: Optional[str] = None, subgraph_hash: Optional[str] = None):
     """Display allocations in a compact format with colors"""
     print_section(title)
     if not allocations:
@@ -1265,6 +1268,21 @@ def print_allocations(allocations: List[Dict], title: str, my_indexer_id: Option
     ens_names = {}
     if ens_client:
         ens_names = ens_client.resolve_addresses_batch(indexer_addresses)
+    
+    # Fetch sync status for each indexer (if we have their URLs and subgraph hash)
+    sync_statuses = {}  # indexer_id -> status
+    sync_errors = []
+    if indexer_urls and subgraph_hash:
+        status_client = IndexerStatusClient(timeout=10)
+        for indexer_id, url in indexer_urls.items():
+            if url:
+                all_statuses = status_client.get_all_deployments_status(url)
+                if all_statuses:
+                    status = all_statuses.get(subgraph_hash)
+                    if status:
+                        sync_statuses[indexer_id] = status
+                elif status_client.last_error:
+                    sync_errors.append((indexer_id[:10], status_client.last_error))
     
     total = 0
     my_accrued_rewards = None
@@ -1318,6 +1336,10 @@ def print_allocations(allocations: List[Dict], title: str, my_indexer_id: Option
                 duration_seconds = datetime.now().timestamp() - created_ts
                 duration_str = f" ({format_duration(duration_seconds)})"
         
+        # Get sync status for this indexer
+        sync_status = sync_statuses.get(indexer_id.lower())
+        sync_indicator = f"  {format_sync_status(sync_status)}" if sync_status else ""
+        
         # Calculate padding accounting for ANSI codes
         marker_width = get_display_width(marker)
         indexer_display_width = get_display_width(indexer_display)
@@ -1332,8 +1354,20 @@ def print_allocations(allocations: List[Dict], title: str, my_indexer_id: Option
             closed = format_timestamp(str(alloc.get('closedAt', '0')))[:16]
             print(f"  {marker}{' ' * marker_padding}  {indexer_color}{indexer_display}{' ' * indexer_padding}{Colors.RESET}  {Colors.BRIGHT_GREEN}{' ' * tokens_padding}{tokens_str}{Colors.RESET}  {Colors.DIM}{created}{Colors.RESET}  {status_color}{status}{Colors.RESET}")
         else:
-            print(f"  {marker}{' ' * marker_padding}  {indexer_color}{indexer_display}{' ' * indexer_padding}{Colors.RESET}  {Colors.BRIGHT_GREEN}{' ' * tokens_padding}{tokens_str}{Colors.RESET}  {Colors.DIM}{created}{Colors.RESET}  {status_color}{status}{Colors.RESET}{Colors.DIM}{duration_str}{Colors.RESET}")
+            print(f"  {marker}{' ' * marker_padding}  {indexer_color}{indexer_display}{' ' * indexer_padding}{Colors.RESET}  {Colors.BRIGHT_GREEN}{' ' * tokens_padding}{tokens_str}{Colors.RESET}  {Colors.DIM}{created}{Colors.RESET}  {status_color}{status}{Colors.RESET}{Colors.DIM}{duration_str}{Colors.RESET}{sync_indicator}")
+    
     print(f"{Colors.BOLD}Total: {Colors.BRIGHT_GREEN}{format_tokens(str(int(total * 1e18)))}{Colors.RESET}")
+    
+    # Show sync errors summary (unique errors only)
+    if sync_errors:
+        unique_errors = {}
+        for indexer_id, error in sync_errors:
+            if error not in unique_errors:
+                unique_errors[error] = []
+            unique_errors[error].append(indexer_id)
+        for error, indexers in unique_errors.items():
+            if len(indexers) <= 3:
+                print(f"  {Colors.DIM}⚠ Sync status unavailable for {', '.join(indexers)}: {error}{Colors.RESET}")
     
     # Display accrued rewards for my allocation
     if my_indexer_id and my_allocation_id:
@@ -1711,6 +1745,11 @@ def get_display_width(text: str) -> int:
     return len(strip_ansi(text))
 
 
+def format_sync_status(status: Optional[Dict]) -> str:
+    """Format sync status as a colored indicator (wrapper using local Colors)"""
+    return _format_sync_status(status, Colors)
+
+
 def main():
     parser = argparse.ArgumentParser(
         description='CLI tool to analyze TheGraph allocations and signals',
@@ -1840,7 +1879,7 @@ Example:
         
         # 10. Display allocations (with reward proportion for accrued rewards estimation)
         reward_proportion = subgraph_metadata.get('rewardProportion') if subgraph_metadata else None
-        print_allocations(current_allocations, "Active Allocations", my_indexer_id, ens_client, indexer_urls, reward_proportion, network_url)
+        print_allocations(current_allocations, "Active Allocations", my_indexer_id, ens_client, indexer_urls, reward_proportion, network_url, args.subgraph_hash)
         
         # 11. Combined allocations/unallocations/collections timeline
         print_allocations_timeline(allocation_history, unallocations, poi_submissions, args.hours, my_indexer_id, ens_client, indexers_stake_info, indexer_urls)

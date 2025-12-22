@@ -721,6 +721,15 @@ class LegacyRewardsClient:
         return rewards_map
 
 
+# Import shared sync status functionality
+from sync_status import IndexerStatusClient, format_sync_status as _format_sync_status
+
+
+def format_sync_status(status: Optional[Dict]) -> str:
+    """Format sync status as a colored indicator (wrapper using local Colors)"""
+    return _format_sync_status(status, Colors)
+
+
 def main():
     parser = argparse.ArgumentParser(
         description='Display indexer information from The Graph Network',
@@ -1098,7 +1107,23 @@ Examples:
     # Active allocations summary - use dedicated query for true top allocations
     top_allocs = client.get_top_allocations(indexer_id, 10)
     if top_allocs:
+        # Get sync status from indexer's public status endpoint
+        indexer_url = indexer.get('url')
+        sync_statuses = {}
+        status_error = None
+        status_client = None
+        
+        if indexer_url:
+            status_client = IndexerStatusClient(timeout=15)
+            sync_statuses = status_client.get_all_deployments_status(indexer_url)
+            if not sync_statuses and status_client.last_error:
+                status_error = status_client.last_error
+        else:
+            status_error = "No indexer URL in network subgraph"
+        
         print_section("Top Active Allocations")
+        if status_error:
+            print(f"  {Colors.DIM}⚠ Sync status unavailable: {status_error}{Colors.RESET}")
         for alloc in top_allocs:
             deployment = alloc.get('subgraphDeployment', {})
             subgraph_hash = deployment.get('ipfsHash', '?')
@@ -1108,7 +1133,15 @@ Examples:
             signal = int(deployment.get('signalledTokens', '0')) / 1e18
             created_ts = int(alloc.get('createdAt', 0))
             age = format_duration(int(datetime.now().timestamp()) - created_ts)
-            print(f"  {subgraph}  {tokens:>12}  {Colors.DIM}{age:>8}  signal: {signal:,.0f}{Colors.RESET}")
+            
+            # Get sync status for this deployment
+            sync_status = sync_statuses.get(subgraph_hash)
+            sync_indicator = format_sync_status(sync_status) if sync_statuses else ""
+            
+            if sync_indicator:
+                print(f"  {subgraph}  {tokens:>12}  {Colors.DIM}{age:>8}{Colors.RESET}  {sync_indicator}")
+            else:
+                print(f"  {subgraph}  {tokens:>12}  {Colors.DIM}{age:>8}  signal: {signal:,.0f}{Colors.RESET}")
     
     print()
 
