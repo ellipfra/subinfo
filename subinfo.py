@@ -1207,14 +1207,15 @@ def update_single_allocation_line(allocation_lines: List[Dict], indexer_id: str,
         return
     
     # Calculate how many lines back from cursor to this allocation line
-    # Cursor is at end, we need to go back: lines_after + (num_allocations - line_index - 1) + 1
+    # From cursor position, we go back: lines_after + remaining_allocations_below
+    # line_index 0 is first alloc, so we need to go back over all other allocs too
     lines_back = lines_after + (len(allocation_lines) - line_index)
     
-    # Save cursor, move up, clear line, write, restore cursor
-    sys.stdout.write(f"\033[s")  # Save cursor position
-    sys.stdout.write(f"\033[{lines_back}A")  # Move up
-    sys.stdout.write(f"\033[2K\r{base_line}{sync_indicator}")  # Clear and rewrite
-    sys.stdout.write(f"\033[u")  # Restore cursor position
+    # Move up, clear line, write, move back down (more reliable than save/restore)
+    sys.stdout.write(f"\033[{lines_back}A")  # Move up N lines
+    sys.stdout.write(f"\033[2K")  # Clear entire line
+    sys.stdout.write(f"\r{base_line}{sync_indicator}")  # Write from start of line
+    sys.stdout.write(f"\033[{lines_back}B")  # Move back down N lines
     sys.stdout.flush()
 
 
@@ -1769,8 +1770,9 @@ Example:
             print_allocations_timeline(allocation_history, unallocations, poi_submissions, args.hours, my_indexer_id, ens_client, indexers_stake_info, indexer_urls)
             
             # Count timeline lines (for cursor positioning)
+            # Note: print_section adds a \n before the header, so +1 for empty line
             timeline_events = len(allocation_history) + len(unallocations) + (len(poi_submissions) if poi_submissions else 0)
-            timeline_lines = 1  # Section header
+            timeline_lines = 2  # Empty line (from print_section's \n) + Section header
             if timeline_events == 0:
                 timeline_lines += 1  # "No events found"
             else:
