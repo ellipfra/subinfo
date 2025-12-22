@@ -40,6 +40,9 @@ from common import (
 from config import get_network_subgraph_url, get_ens_subgraph_url, get_rpc_url
 from ens import ENSClient
 from sync_status import IndexerStatusClient, format_sync_status as _format_sync_status
+from logger import setup_logging, get_logger
+
+log = get_logger(__name__)
 
 
 def get_subgraph_id_from_deployment(deployment: Dict) -> Optional[str]:
@@ -484,8 +487,17 @@ Examples:
     )
     parser.add_argument('search_term', help='Search term (ENS name, address, or URL)')
     parser.add_argument('--hours', type=int, default=48, help='Hours of history to show (default: 48)')
+    parser.add_argument(
+        '-v', '--verbose',
+        action='count',
+        default=0,
+        help='Increase verbosity (use -v for info, -vv for debug)'
+    )
     
     args = parser.parse_args()
+    
+    # Setup logging based on verbosity
+    setup_logging(verbosity=args.verbose)
     
     network_url = get_network_subgraph_url()
     if not network_url:

@@ -23,6 +23,7 @@ import re
 import time
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Tuple
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import requests
 from pathlib import Path
 
@@ -36,6 +37,9 @@ from config import get_network_subgraph_url, get_ens_subgraph_url, get_my_indexe
 from ens import ENSClient
 from sync_status import IndexerStatusClient, format_sync_status as _format_sync_status
 from rewards import get_accrued_rewards, get_indexer_reward_cut
+from logger import setup_logging, get_logger
+
+log = get_logger(__name__)
     
 
 
@@ -496,7 +500,7 @@ class TheGraphClient:
                 network_total_signal = cache_data.get('total_signal', 0)
             else:
                 # Query all subgraph deployments to get total allocations and total signal
-                print(f"{Colors.DIM}Calculating network totals...{Colors.RESET}", file=sys.stderr, end='', flush=True)
+                log.info("Calculating network totals (this may take a moment)...")
                 network_total_allocations = 0
                 network_total_signal = 0
                 skip = 0
@@ -536,14 +540,14 @@ class TheGraphClient:
                     
                     batch_count += 1
                     if batch_count % 5 == 0:
-                        print(f"{Colors.DIM}.{Colors.RESET}", file=sys.stderr, end='', flush=True)
+                        log.debug(f"Fetched {batch_count * batch_size} deployments...")
                     
                     if len(deployments) < batch_size:
                         break
                     
                     skip += batch_size
                 
-                print(f"{Colors.DIM} done{Colors.RESET}\n", file=sys.stderr)
+                log.info(f"Network totals calculated: {network_total_allocations:,.0f} allocated, {network_total_signal:,.0f} signal")
                 
                 # Save to cache file
                 try:
@@ -960,20 +964,33 @@ def print_allocations(allocations: List[Dict], title: str, my_indexer_id: Option
     if ens_client:
         ens_names = ens_client.resolve_addresses_batch(indexer_addresses)
     
-    # Fetch sync status for each indexer (if we have their URLs and subgraph hash)
+    # Fetch sync status for each indexer in parallel (if we have their URLs and subgraph hash)
     sync_statuses = {}  # indexer_id -> status
     sync_errors = []
     if indexer_urls and subgraph_hash:
-        status_client = IndexerStatusClient(timeout=10)
-        for indexer_id, url in indexer_urls.items():
-            if url:
-                all_statuses = status_client.get_all_deployments_status(url)
-                if all_statuses:
-                    status = all_statuses.get(subgraph_hash)
-                    if status:
-                        sync_statuses[indexer_id] = status
-                elif status_client.last_error:
-                    sync_errors.append((indexer_id[:10], status_client.last_error))
+        def fetch_indexer_status(indexer_id: str, url: str) -> Tuple[str, Optional[Dict], Optional[str]]:
+            """Fetch status for a single indexer, returns (indexer_id, status, error)"""
+            if not url:
+                return (indexer_id, None, None)
+            client = IndexerStatusClient(timeout=10)
+            all_statuses = client.get_all_deployments_status(url)
+            if all_statuses:
+                status = all_statuses.get(subgraph_hash)
+                return (indexer_id, status, None)
+            return (indexer_id, None, client.last_error)
+        
+        # Execute requests in parallel
+        with ThreadPoolExecutor(max_workers=10) as executor:
+            futures = {
+                executor.submit(fetch_indexer_status, indexer_id, url): indexer_id
+                for indexer_id, url in indexer_urls.items()
+            }
+            for future in as_completed(futures):
+                indexer_id, status, error = future.result()
+                if status:
+                    sync_statuses[indexer_id] = status
+                elif error:
+                    sync_errors.append((indexer_id[:10], error))
     
     total = 0
     my_accrued_rewards = None
@@ -1374,8 +1391,17 @@ Example:
         default=48,
         help='Number of hours for history (default: 48)'
     )
+    parser.add_argument(
+        '-v', '--verbose',
+        action='count',
+        default=0,
+        help='Increase verbosity (use -v for info, -vv for debug)'
+    )
     
     args = parser.parse_args()
+    
+    # Setup logging based on verbosity
+    setup_logging(verbosity=args.verbose)
     
     # Get network subgraph URL
     network_url = args.url or get_network_subgraph_url()
