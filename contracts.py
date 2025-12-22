@@ -53,6 +53,12 @@ PPM_BASE = 1_000_000
 # Default thawing period in epochs (approximately 28 days)
 DEFAULT_THAWING_PERIOD = 28
 
+# Epoch duration in seconds (approximately 24 hours on Arbitrum)
+EPOCH_DURATION_SECONDS = 86400  # 24 hours
+
+# Maximum allocation age in epochs before rewards expire
+MAX_ALLOCATION_EPOCHS = 28
+
 
 # =============================================================================
 # Helper Functions

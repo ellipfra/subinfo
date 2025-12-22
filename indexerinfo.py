@@ -350,6 +350,23 @@ class TheGraphClient:
         allocations = result.get('allocations', [])
         return [a['id'] for a in allocations if a.get('id')]
     
+    def get_all_active_allocations_with_created(self, indexer_id: str) -> List[Dict]:
+        """Get all active allocations with their IDs and creation timestamps"""
+        query = f"""
+        {{
+            allocations(
+                where: {{ indexer: "{indexer_id.lower()}", status: Active }}
+                first: 1000
+            ) {{
+                id
+                createdAt
+                allocatedTokens
+            }}
+        }}
+        """
+        result = self.query(query)
+        return result.get('allocations', [])
+    
     def get_delegation_events(self, indexer_id: str, hours: int = 48) -> Tuple[List[Dict], List[Dict]]:
         """Get recent delegation/undelegation events for an indexer"""
         cutoff_time = int((datetime.now() - timedelta(hours=hours)).timestamp())
@@ -731,8 +748,11 @@ Examples:
             print_section("Accrued Rewards")
             print(f"  {Colors.DIM}web3 library not installed. Run: pip install web3{Colors.RESET}")
         else:
-            allocation_ids = client.get_all_active_allocation_ids(indexer_id)
-            if allocation_ids:
+            # Get allocations with creation timestamps
+            allocations_with_created = client.get_all_active_allocations_with_created(indexer_id)
+            if allocations_with_created:
+                allocation_ids = [a['id'] for a in allocations_with_created if a.get('id')]
+                
                 print_section(f"Accrued Rewards ({len(allocation_ids)} allocations)")
                 print(f"  {Colors.DIM}Fetching rewards from smart contract...{Colors.RESET}", end='', flush=True)
                 
@@ -753,6 +773,73 @@ Examples:
                     print(f"  Delegator share:   {Colors.DIM}{split['delegators']:,.0f} GRT{Colors.RESET} ({(1-raw_reward_cut)*100:.1f}%)")
                     if failed > 0:
                         print(f"  {Colors.DIM}⚠ {failed} allocations failed to fetch{Colors.RESET}")
+                    
+                    # Build histogram by epochs until expiration
+                    from contracts import EPOCH_DURATION_SECONDS, MAX_ALLOCATION_EPOCHS
+                    now = datetime.now().timestamp()
+                    
+                    # Group rewards by epochs remaining until expiration
+                    epoch_buckets = {}  # epoch_remaining -> (total_rewards, count)
+                    
+                    for alloc in allocations_with_created:
+                        alloc_id = alloc.get('id', '').lower()
+                        created_at = int(alloc.get('createdAt', 0))
+                        reward = rewards_map.get(alloc_id) or rewards_map.get(alloc_id.lower()) or 0
+                        
+                        if created_at > 0 and reward and reward > 0:
+                            # Calculate age in epochs (days)
+                            age_seconds = now - created_at
+                            age_epochs = int(age_seconds / EPOCH_DURATION_SECONDS)
+                            # Can be negative if allocation is past max age
+                            epochs_remaining = MAX_ALLOCATION_EPOCHS - age_epochs
+                            
+                            if epochs_remaining not in epoch_buckets:
+                                epoch_buckets[epochs_remaining] = {'rewards': 0, 'count': 0}
+                            epoch_buckets[epochs_remaining]['rewards'] += reward
+                            epoch_buckets[epochs_remaining]['count'] += 1
+                    
+                    # Display histogram
+                    if epoch_buckets:
+                        print(f"\n  {Colors.BOLD}Rewards by epochs until expiration:{Colors.RESET}")
+                        print(f"  {Colors.DIM}(allocations expire after 28 epochs ≈ 28 days){Colors.RESET}")
+                        
+                        max_reward = max(b['rewards'] for b in epoch_buckets.values()) if epoch_buckets else 0
+                        bar_width = 30
+                        
+                        # Group epochs into buckets: expired (<0), 0, 1-3, 4-7, 8-14, 15-21, 22-28
+                        # Note: negative epochs means allocation is past max age (should have been closed)
+                        # Use -9999 to catch all expired allocations regardless of how old
+                        bucket_ranges = [(-9999, -1), (0, 0), (1, 3), (4, 7), (8, 14), (15, 21), (22, 28)]
+                        bucket_labels = ["exp!", "0d", "1-3d", "4-7d", "8-14d", "15-21d", "22-28d"]
+                        
+                        for (start, end), label_text in zip(bucket_ranges, bucket_labels):
+                            # For expired bucket, sum all negative epochs
+                            if start < -100:
+                                bucket_rewards = sum(v['rewards'] for k, v in epoch_buckets.items() if k < 0)
+                                bucket_count = sum(v['count'] for k, v in epoch_buckets.items() if k < 0)
+                            else:
+                                bucket_rewards = sum(epoch_buckets.get(e, {}).get('rewards', 0) for e in range(start, end + 1))
+                                bucket_count = sum(epoch_buckets.get(e, {}).get('count', 0) for e in range(start, end + 1))
+                            
+                            # Color based on urgency
+                            if end <= 0:
+                                color = Colors.BRIGHT_RED  # Expired or expiring today - CRITICAL
+                                prefix = "⚠️ "  # emoji (2 visual cells) + space = 3 visual cells
+                            elif start <= 3:
+                                color = Colors.BRIGHT_YELLOW  # 1-3 days - soon
+                                prefix = "⏰ "  # emoji (2 visual cells) + space = 3 visual cells
+                            else:
+                                color = Colors.BRIGHT_GREEN  # Safe
+                                prefix = "   "  # 3 spaces to match emoji + space
+                            
+                            bar_len = min(bar_width, int((bucket_rewards / max_reward) * bar_width)) if max_reward > 0 and bucket_rewards > 0 else 0
+                            bar = '█' * bar_len + '░' * (bar_width - bar_len)
+                            
+                            # Consistent formatting: prefix (3 cells) + label (6 chars right-aligned) + bar
+                            if bucket_rewards > 0:
+                                print(f"  {prefix}{label_text:>6} {color}{bar}{Colors.RESET} {bucket_rewards:>10,.0f} GRT ({bucket_count:>3})")
+                            else:
+                                print(f"  {prefix}{label_text:>6} {Colors.DIM}{bar}{Colors.RESET}          - GRT")
                 else:
                     print(f"  {Colors.DIM}No accrued rewards found (all allocations may be newly opened){Colors.RESET}")
             else:
