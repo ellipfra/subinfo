@@ -1026,15 +1026,14 @@ def collect_sync_statuses(async_context: Optional[Dict], timeout: float = 5.0) -
     return sync_statuses, sync_errors
 
 
-def print_allocations(allocations: List[Dict], title: str, my_indexer_id: Optional[str] = None, ens_client: Optional[ENSClient] = None, indexer_urls: Optional[Dict[str, str]] = None, reward_proportion: Optional[float] = None, network_url: Optional[str] = None, subgraph_hash: Optional[str] = None, sync_statuses: Optional[Dict] = None, sync_errors: Optional[Dict] = None, show_sync_placeholder: bool = False) -> Tuple[List[Dict], int]:
+def print_allocations(allocations: List[Dict], title: str, my_indexer_id: Optional[str] = None, ens_client: Optional[ENSClient] = None, indexer_urls: Optional[Dict[str, str]] = None, reward_proportion: Optional[float] = None, network_url: Optional[str] = None, subgraph_hash: Optional[str] = None, sync_statuses: Optional[Dict] = None, sync_errors: Optional[Dict] = None) -> Tuple[List[Dict], int]:
     """Display allocations in a compact format with colors
     
     sync_statuses: pre-collected sync statuses dict (indexer_id -> status), or None to skip sync display
     sync_errors: dict of indexer_id -> short error reason
-    show_sync_placeholder: if True, show ⏳ placeholder for sync status (to be updated later)
     
     Returns: (allocation_lines, lines_after_allocations)
-        allocation_lines: list of allocation info dicts for later sync status updates  
+        allocation_lines: list of allocation info dicts (for compatibility, but not used anymore)
         lines_after_allocations: count of lines printed after allocation lines (Total, Your Allocation, etc.)
     """
     print_section(title)
@@ -1044,6 +1043,7 @@ def print_allocations(allocations: List[Dict], title: str, my_indexer_id: Option
     
     # Track lines printed after allocation lines
     lines_after = 0
+    allocation_lines = []  # Keep for compatibility but not used
     
     # Resolve ENS names in batch
     indexer_addresses = [alloc.get('indexer', {}).get('id', '') for alloc in allocations]
@@ -1112,15 +1112,13 @@ def print_allocations(allocations: List[Dict], title: str, my_indexer_id: Option
                 duration_seconds = datetime.now().timestamp() - created_ts
                 duration_str = f" ({format_duration(duration_seconds)})"
         
-        # Get sync status for this indexer (or show placeholder/error)
+        # Get sync status for this indexer
         sync_status = sync_statuses.get(indexer_id.lower())
-        sync_error = sync_errors.get(indexer_id.lower())
+        sync_error = sync_errors.get(indexer_id.lower()) if sync_errors else None
         if sync_status:
             sync_indicator = f"  {format_sync_status(sync_status)}"
         elif sync_error:
             sync_indicator = f"  {Colors.DIM}({sync_error}){Colors.RESET}"
-        elif show_sync_placeholder:
-            sync_indicator = f"  {Colors.DIM}⏳{Colors.RESET}"
         elif indexer_urls and not indexer_urls.get(indexer_id.lower()):
             sync_indicator = f"  {Colors.DIM}(no URL){Colors.RESET}"
         else:
@@ -1136,18 +1134,15 @@ def print_allocations(allocations: List[Dict], title: str, my_indexer_id: Option
         indexer_padding = max(0, 32 - indexer_display_width)
         tokens_padding = max(0, 17 - tokens_str_width)
         
-        # Build the base line (without sync indicator) for later updates
-        base_line = f"  {marker}{' ' * marker_padding}  {indexer_color}{indexer_display}{' ' * indexer_padding}{Colors.RESET}  {Colors.BRIGHT_GREEN}{' ' * tokens_padding}{tokens_str}{Colors.RESET}  {Colors.DIM}{created}{Colors.RESET}  {status_color}{status}{Colors.RESET}{Colors.DIM}{duration_str}{Colors.RESET}"
-        
         if alloc.get('closedAt'):
             closed = format_timestamp(str(alloc.get('closedAt', '0')))[:16]
             print(f"  {marker}{' ' * marker_padding}  {indexer_color}{indexer_display}{' ' * indexer_padding}{Colors.RESET}  {Colors.BRIGHT_GREEN}{' ' * tokens_padding}{tokens_str}{Colors.RESET}  {Colors.DIM}{created}{Colors.RESET}  {status_color}{status}{Colors.RESET}")
         else:
-            print(f"{base_line}{sync_indicator}")
-            # Track this line for later sync update (only for active allocations)
+            print(f"  {marker}{' ' * marker_padding}  {indexer_color}{indexer_display}{' ' * indexer_padding}{Colors.RESET}  {Colors.BRIGHT_GREEN}{' ' * tokens_padding}{tokens_str}{Colors.RESET}  {Colors.DIM}{created}{Colors.RESET}  {status_color}{status}{Colors.RESET}{Colors.DIM}{duration_str}{Colors.RESET}{sync_indicator}")
+            # Track for compatibility (not used anymore)
             allocation_lines.append({
                 'indexer_id': indexer_id.lower(),
-                'base_line': base_line
+                'base_line': ''  # Not needed anymore
             })
     
     print(f"{Colors.BOLD}Total: {Colors.BRIGHT_GREEN}{format_tokens(str(int(total * 1e18)))}{Colors.RESET}")
@@ -1181,108 +1176,6 @@ def print_allocations(allocations: List[Dict], title: str, my_indexer_id: Option
             lines_after += 1
     
     return allocation_lines, lines_after
-
-
-def update_single_allocation_line(allocation_lines: List[Dict], indexer_id: str, sync_indicator: str, lines_after: int):
-    """Update a single allocation line with sync status
-    
-    allocation_lines: list of dicts with 'indexer_id' and 'base_line'
-    indexer_id: the indexer to update
-    sync_indicator: formatted sync indicator string
-    lines_after: number of lines printed after the allocation section
-    """
-    if not sys.stdout.isatty():
-        return
-    
-    # Find the line index for this indexer
-    line_index = None
-    base_line = None
-    for i, alloc_info in enumerate(allocation_lines):
-        if alloc_info['indexer_id'] == indexer_id:
-            line_index = i
-            base_line = alloc_info['base_line']
-            break
-    
-    if line_index is None:
-        return
-    
-    # Calculate how many lines back from cursor to this allocation line
-    # From cursor position, we go back: lines_after + remaining_allocations_below
-    # line_index 0 is first alloc, so we need to go back over all other allocs too
-    lines_back = lines_after + (len(allocation_lines) - line_index)
-    
-    # Move up, clear line, write, move back down (more reliable than save/restore)
-    sys.stdout.write(f"\033[{lines_back}A")  # Move up N lines
-    sys.stdout.write(f"\033[2K")  # Clear entire line
-    sys.stdout.write(f"\r{base_line}{sync_indicator}")  # Write from start of line
-    sys.stdout.write(f"\033[{lines_back}B")  # Move back down N lines
-    sys.stdout.flush()
-
-
-def stream_sync_status_updates(allocation_lines: List[Dict], async_context: Dict, lines_after: int, timeout: float = 8.0) -> Tuple[Dict, Dict]:
-    """Stream sync status updates as they come in, updating the display progressively
-    
-    Returns: (sync_statuses, sync_errors) for any post-processing
-    """
-    sync_statuses = {}
-    sync_errors = {}
-    
-    if not async_context or not async_context.get('futures') or not allocation_lines:
-        return sync_statuses, sync_errors
-    
-    if not sys.stdout.isatty():
-        # Non-interactive: just collect results
-        return collect_sync_statuses(async_context, timeout)
-    
-    futures = async_context['futures']
-    completed_indexers = set()
-    
-    # Build a map of indexer_id -> line exists
-    tracked_indexers = {info['indexer_id'] for info in allocation_lines}
-    
-    try:
-        for future in as_completed(futures, timeout=timeout):
-            try:
-                indexer_id, status, error = future.result(timeout=0.1)
-                completed_indexers.add(indexer_id)
-                
-                # Only update if this indexer is in our allocation lines
-                if indexer_id not in tracked_indexers:
-                    continue
-                
-                if status:
-                    sync_statuses[indexer_id] = status
-                    sync_indicator = f"  {format_sync_status(status)}"
-                    update_single_allocation_line(allocation_lines, indexer_id, sync_indicator, lines_after)
-                elif error:
-                    # Shorten common errors
-                    short_error = error
-                    if 'timeout' in error.lower() or 'timed out' in error.lower():
-                        short_error = 'timeout'
-                    elif '404' in error or 'not found' in error.lower():
-                        short_error = 'no endpoint'
-                    elif '403' in error or 'forbidden' in error.lower():
-                        short_error = 'forbidden'
-                    elif 'connection' in error.lower() or 'connect' in error.lower():
-                        short_error = 'unreachable'
-                    elif 'ssl' in error.lower() or 'certificate' in error.lower():
-                        short_error = 'SSL error'
-                    elif len(error) > 15:
-                        short_error = error[:12] + '...'
-                    sync_errors[indexer_id] = short_error
-                    sync_indicator = f"  {Colors.DIM}({short_error}){Colors.RESET}"
-                    update_single_allocation_line(allocation_lines, indexer_id, sync_indicator, lines_after)
-            except Exception:
-                pass
-    except TimeoutError:
-        # Mark remaining tracked indexers as timed out
-        for indexer_id in tracked_indexers:
-            if indexer_id not in completed_indexers and indexer_id not in sync_statuses and indexer_id not in sync_errors:
-                sync_errors[indexer_id] = 'timeout'
-                sync_indicator = f"  {Colors.DIM}(timeout){Colors.RESET}"
-                update_single_allocation_line(allocation_lines, indexer_id, sync_indicator, lines_after)
-    
-    return sync_statuses, sync_errors
 
 
 def print_sync_status_summary(allocations: List[Dict], sync_statuses: Dict, ens_client: Optional[ENSClient] = None):
@@ -1755,48 +1648,23 @@ Example:
         unalloc_indexer_ids = [u.get('indexer', {}).get('id', '') for u in unallocations]
         indexers_stake_info = client.get_indexers_stake_info(unalloc_indexer_ids) if unalloc_indexer_ids else {}
         
-        # 10. Display allocations
-        reward_proportion = subgraph_metadata.get('rewardProportion') if subgraph_metadata else None
+        # 10. Collect sync statuses while we display other sections (most should be ready by now)
+        # Give it a short timeout since we've already waited for metadata/curation/signal
+        sync_statuses = {}
+        sync_errors = {}
+        if sync_context and sync_context.get('futures'):
+            sync_statuses, sync_errors = collect_sync_statuses(sync_context, timeout=5.0)
         
-        if sys.stdout.isatty() and sync_context and sync_context.get('futures'):
-            # Interactive mode: show placeholders, then update in-place
-            allocation_lines, lines_after_allocations = print_allocations(
-                current_allocations, "Active Allocations", my_indexer_id, ens_client, 
-                indexer_urls, reward_proportion, network_url, args.subgraph_hash,
-                sync_statuses=None, show_sync_placeholder=True
-            )
-            
-            # 11. Combined allocations/unallocations/collections timeline
-            print_allocations_timeline(allocation_history, unallocations, poi_submissions, args.hours, my_indexer_id, ens_client, indexers_stake_info, indexer_urls)
-            
-            # Count timeline lines (for cursor positioning)
-            # Note: print_section adds a \n before the header, so +1 for empty line
-            timeline_events = len(allocation_history) + len(unallocations) + (len(poi_submissions) if poi_submissions else 0)
-            timeline_lines = 2  # Empty line (from print_section's \n) + Section header
-            if timeline_events == 0:
-                timeline_lines += 1  # "No events found"
-            else:
-                timeline_lines += timeline_events + 1  # Events + Total line
-            
-            # 12. Stream sync status updates progressively
-            if allocation_lines:
-                total_lines_after = lines_after_allocations + timeline_lines
-                stream_sync_status_updates(allocation_lines, sync_context, total_lines_after, timeout=8.0)
-        else:
-            # Non-interactive mode: wait for sync and display inline
-            sync_statuses = {}
-            sync_errors = {}
-            if sync_context and sync_context.get('futures'):
-                sync_statuses, sync_errors = collect_sync_statuses(sync_context, timeout=10.0)
-            
-            _, _ = print_allocations(
-                current_allocations, "Active Allocations", my_indexer_id, ens_client, 
-                indexer_urls, reward_proportion, network_url, args.subgraph_hash,
-                sync_statuses=sync_statuses, sync_errors=sync_errors, show_sync_placeholder=False
-            )
-            
-            # 11. Combined allocations/unallocations/collections timeline
-            print_allocations_timeline(allocation_history, unallocations, poi_submissions, args.hours, my_indexer_id, ens_client, indexers_stake_info, indexer_urls)
+        # 11. Display allocations with sync status inline (no placeholders, no cursor manipulation)
+        reward_proportion = subgraph_metadata.get('rewardProportion') if subgraph_metadata else None
+        _, _ = print_allocations(
+            current_allocations, "Active Allocations", my_indexer_id, ens_client, 
+            indexer_urls, reward_proportion, network_url, args.subgraph_hash,
+            sync_statuses=sync_statuses, sync_errors=sync_errors
+        )
+        
+        # 12. Combined allocations/unallocations/collections timeline
+        print_allocations_timeline(allocation_history, unallocations, poi_submissions, args.hours, my_indexer_id, ens_client, indexers_stake_info, indexer_urls)
         
         print()  # Final newline
         
