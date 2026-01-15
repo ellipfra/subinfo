@@ -680,11 +680,9 @@ Examples:
     # Delegations in thawing = delegated - delegatedCapacity
     delegations_thawing = delegated - delegated_capacity
 
-    # Effective capacity includes thawing delegations (still usable during 28-epoch thawing period)
-    effective_capacity = token_capacity + delegated_thawing
-
-    # Use effective capacity for total usable stake
-    total_stake = effective_capacity if effective_capacity > 0 else (self_stake + delegated)
+    # token_capacity already includes thawing delegations (from contract or subgraph)
+    # No need to add delegated_thawing again - that would be double-counting
+    total_stake = token_capacity if token_capacity > 0 else (self_stake + delegated)
     # Calculate remaining directly (can be negative if over-allocated)
     remaining = total_stake - allocated
     remaining_pct = (remaining / total_stake * 100) if total_stake > 0 else 0
